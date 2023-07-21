@@ -8,6 +8,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { FooterComponent } from './core/layout/footer/footer.component';
 import { HomeModule } from './modules/home/home.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
