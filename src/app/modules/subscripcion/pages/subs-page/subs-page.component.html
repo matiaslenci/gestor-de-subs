@@ -1,4 +1,4 @@
-<div class="max-w-screen-xl px-6 mt-5">
+<div class="max-w-screen-xl px-6">
   <div class="flex flex-row flex-wrap items-center justify-start gap-5">
     <img
       class="w-16 h-auto rounded"
@@ -21,12 +21,36 @@
     >
       Gestionar subscripción
     </button>
-    <button
-      type="button"
-      class="w-10/12 px-5 py-3 text-base font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-blue-800 dark:hover:bg-blue-700 dark:focus:ring-gray-700 dark:border-gray-700"
-    >
-      Compartir subscripción
-    </button>
+    <!-- COMPARTIR SUBSCRIPCION -->
+    <div *ngIf="!compartido">
+      <button
+        type="button"
+        class="flex flex-row items-center justify-center w-10/12 gap-3 px-5 py-3 text-base font-medium text-white bg-blue-800 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-800 dark:hover:bg-blue-700 dark:focus:ring-gray-700 dark:border-gray-700"
+      >
+        Compartir subscripción
+        <svg height="26" viewBox="0 -960 960 960" width="26">
+          <path
+            d="M730-400v-130H600v-60h130v-130h60v130h130v60H790v130h-60Zm-370-81q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42ZM40-160v-94q0-35 17.5-63.5T108-360q75-33 133.338-46.5 58.339-13.5 118.5-13.5Q420-420 478-406.5 536-393 611-360q33 15 51 43t18 63v94H40Zm60-60h520v-34q0-16-9-30.5T587-306q-71-33-120-43.5T360-360q-58 0-107.5 10.5T132-306q-15 7-23.5 21.5T100-254v34Zm260-321q39 0 64.5-25.5T450-631q0-39-25.5-64.5T360-721q-39 0-64.5 25.5T270-631q0 39 25.5 64.5T360-541Zm0-90Zm0 411Z "
+            fill="white"
+          />
+        </svg>
+      </button>
+    </div>
+    <!-- AMIGOS -->
+    <div *ngIf="compartido">
+      <button
+        type="button"
+        class="flex flex-row items-center justify-center w-10/12 gap-3 px-5 py-3 mb-2 mr-2 text-base font-medium text-center text-blue-700 border border-blue-700 rounded-lg hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+      >
+        Gestionar amigos
+        <svg height="26" viewBox="0 -960 960 960" width="26">
+          <path
+            d="M38-160v-94q0-35 18-63.5t50-42.5q73-32 131.5-46T358-420q62 0 120 14t131 46q32 14 50.5 42.5T678-254v94H38Zm700 0v-94q0-63-32-103.5T622-423q69 8 130 23.5t99 35.5q33 19 52 47t19 63v94H738ZM358-481q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42Zm360-150q0 66-42 108t-108 42q-11 0-24.5-1.5T519-488q24-25 36.5-61.5T568-631q0-45-12.5-79.5T519-774q11-3 24.5-5t24.5-2q66 0 108 42t42 108ZM98-220h520v-34q0-16-9.5-31T585-306q-72-32-121-43t-106-11q-57 0-106.5 11T130-306q-14 6-23 21t-9 31v34Zm260-321q39 0 64.5-25.5T448-631q0-39-25.5-64.5T358-721q-39 0-64.5 25.5T268-631q0 39 25.5 64.5T358-541Zm0 321Zm0-411Z"
+            fill="white"
+          />
+        </svg>
+      </button>
+    </div>
   </div>
   <!-- DATA -->
   <div class="mt-8">
@@ -46,9 +70,9 @@
           </div>
           <!--? PENDIENTE -->
           <span
-            class="inline-flex items-center bg-yellow-100 text-yellow-800 text- font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-white"
+            class="inline-flex items-center bg-yellow-600 text-yellow-300 text-ms font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-500 dark:text-white"
           >
-            <span class="w-2 h-2 mr-1 bg-yellow-500 rounded-full"></span>
+            <span class="w-2 h-2 mr-1 bg-yellow-200 rounded-full"></span>
             Pendiente
           </span>
           <!--? PAGADO -->
@@ -71,11 +95,26 @@
             </p>
           </div>
           <span
-            class="inline-flex items-center text-black text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:text-white"
+            data-tooltip-target="info-impuestos"
+            class="inline-flex items-center text-black text-sm font-medium gap-2 px-2.5 py-0.5 rounded-full dark:text-white"
           >
             $1.000
+            <svg height="26" viewBox="0 -960 960 960" width="26">
+              <path
+                d="M453-280h60v-240h-60v240Zm26.982-314q14.018 0 23.518-9.2T513-626q0-14.45-9.482-24.225-9.483-9.775-23.5-9.775-14.018 0-23.518 9.775T447-626q0 13.6 9.482 22.8 9.483 9.2 23.5 9.2Zm.284 514q-82.734 0-155.5-31.5t-127.266-86q-54.5-54.5-86-127.341Q80-397.681 80-480.5q0-82.819 31.5-155.659Q143-709 197.5-763t127.341-85.5Q397.681-880 480.5-880q82.819 0 155.659 31.5Q709-817 763-763t85.5 127Q880-563 880-480.266q0 82.734-31.5 155.5T763-197.684q-54 54.316-127 86Q563-80 480.266-80Zm.234-60Q622-140 721-239.5t99-241Q820-622 721.188-721 622.375-820 480-820q-141 0-240.5 98.812Q140-622.375 140-480q0 141 99.5 240.5t241 99.5Zm-.5-340Z"
+                fill="gray"
+              />
+            </svg>
           </span>
-          <!-- TODO:Icono de Info -->
+          <div
+            id="info-impuestos"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Este precio no incluye impuestos
+            <!-- TODO:Mensaje de inforación de impuestos -->
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
         </div>
       </li>
       <!-- VENCIMIENTO -->
@@ -139,19 +178,35 @@
               Contraseña
             </p>
           </div>
-          <span
-            class="inline-flex items-center text-black text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:text-white"
+          <div
+            class="inline-flex items-center gap-3 text-black text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:text-white"
           >
-            • • • • • • • •
-          </span>
+            {{ hidePassword ? "• • • • • • • •" : password }}
+            <div (click)="togglePasswordVisibility()" *ngIf="hidePassword">
+              <svg height="26" viewBox="0 -960 960 960" width="26">
+                <path
+                  d="m629-419-44-44q26-71-27-118t-115-24l-44-44q17-11 38-16t43-5q71 0 120.5 49.5T650-500q0 22-5.5 43.5T629-419Zm129 129-40-40q49-36 85.5-80.5T857-500q-50-111-150-175.5T490-740q-42 0-86 8t-69 19l-46-47q35-16 89.5-28T485-800q143 0 261.5 81.5T920-500q-26 64-67 117t-95 93Zm58 226L648-229q-35 14-79 21.5t-89 7.5q-146 0-265-81.5T40-500q20-52 55.5-101.5T182-696L56-822l42-43 757 757-39 44ZM223-654q-37 27-71.5 71T102-500q51 111 153.5 175.5T488-260q33 0 65-4t48-12l-64-64q-11 5-27 7.5t-30 2.5q-70 0-120-49t-50-121q0-15 2.5-30t7.5-27l-97-97Zm305 142Zm-116 58Z "
+                  fill="white"
+                />
+              </svg>
+            </div>
+            <div (click)="togglePasswordVisibility()" *ngIf="!hidePassword">
+              <svg height="26" viewBox="0 -960 960 960" width="26">
+                <path
+                  d="M480.118-330Q551-330 600.5-379.618q49.5-49.617 49.5-120.5Q650-571 600.382-620.5q-49.617-49.5-120.5-49.5Q409-670 359.5-620.382q-49.5 49.617-49.5 120.5Q310-429 359.618-379.5q49.617 49.5 120.5 49.5Zm-.353-58Q433-388 400.5-420.735q-32.5-32.736-32.5-79.5Q368-547 400.735-579.5q32.736-32.5 79.5-32.5Q527-612 559.5-579.265q32.5 32.736 32.5 79.5Q592-453 559.265-420.5q-32.736 32.5-79.5 32.5ZM480-200q-146 0-264-83T40-500q58-134 176-217t264-83q146 0 264 83t176 217q-58 134-176 217t-264 83Zm0-300Zm-.169 240Q601-260 702.5-325.5 804-391 857-500q-53-109-154.331-174.5-101.332-65.5-222.5-65.5Q359-740 257.5-674.5 156-609 102-500q54 109 155.331 174.5 101.332 65.5 222.5 65.5Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </li>
       <!-- Eliminar Subscripcion -->
-      <li class="py-3 sm:py-4">
+      <li class="py-3 cursor-pointer sm:py-4">
         <div class="flex items-center">
           <div class="flex-1 min-w-0">
             <p
-              class="text-base font-medium text-gray-900 truncate dark:text-red-500"
+              class="text-base font-medium text-red-600 truncate dark:text-red-500"
             >
               Eliminar subscripción
             </p>

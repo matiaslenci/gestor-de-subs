@@ -6,6 +6,7 @@
 html,
 body {
   font-family: "Gotham Book", sans-serif;
+  height: 100vh;
 }
 * {
   margin: 0px;
@@ -16,4 +17,29 @@ body {
 @font-face{
   font-family: 'Gotham Book';
   src: url('../src/assets/fonts/Gotham\ Book\ Font.otf');
+}
+
+.app-container {
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 100px auto 100px;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  height: 100vh;
+  width: 100vw;
+}
+
+.header {
+  grid-area: header;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  grid-area: footer;
 }
