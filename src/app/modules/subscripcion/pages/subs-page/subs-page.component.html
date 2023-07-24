@@ -16,6 +16,7 @@
   <!-- BOTONES -->
   <div class="flex flex-col gap-4 mt-6">
     <button
+      [routerLink]="'edit'"
       type="button"
       class="w-10/12 py-3 text-base font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
     >
@@ -205,11 +206,20 @@
       <li class="py-3 cursor-pointer sm:py-4">
         <div class="flex items-center">
           <div class="flex-1 min-w-0">
-            <p
+            <!-- TODO: openBottomSheet() -->
+            <!--   <button
+              (click)="openBottomSheet()"
               class="text-base font-medium text-red-600 truncate dark:text-red-500"
             >
               Eliminar subscripción
-            </p>
+            </button> -->
+            <!-- TODO: Modal si desea eliminar la subscripcion o no -->
+            <button
+              (click)="deleteSub()"
+              class="text-base font-medium text-red-600 truncate dark:text-red-500"
+            >
+              Eliminar subscripción
+            </button>
           </div>
         </div>
       </li>
