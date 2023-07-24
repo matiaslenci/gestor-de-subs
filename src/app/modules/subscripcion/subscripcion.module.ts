@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+/* import { NgModule } from '@angular/core';
 import { SubsPageComponent } from './pages/subs-page/subs-page.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [SubsPageComponent],
@@ -8,3 +8,5 @@ import { SubsPageComponent } from './pages/subs-page/subs-page.component';
   exports: [SubsPageComponent],
 })
 export class SubscripcionModule {}
+ */
+/* TODO:CONVERTIR EN LAZY LOADING */

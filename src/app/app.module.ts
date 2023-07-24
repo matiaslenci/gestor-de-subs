@@ -9,9 +9,15 @@ import { HeaderComponent } from './core/layout/header/header.component';
 import { FooterComponent } from './core/layout/footer/footer.component';
 import { HomeModule } from './modules/home/home.module';
 import { RouterModule } from '@angular/router';
+import { SubsPageComponent } from './modules/subscripcion/pages/subs-page/subs-page.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    SubsPageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
