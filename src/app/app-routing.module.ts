@@ -1,11 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './modules/home/pages/home-page/home-page.component';
-import { SubsPageComponent } from './modules/subscripcion/pages/subs-page/subs-page.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'sub', component: SubsPageComponent },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  {
+    path: 'inicio',
+    loadChildren: () =>
+      import('./modules/home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'sub',
+    loadChildren: () =>
+      import('./modules/subscripcion/subscripcion.module').then(
+        (m) => m.SubscripcionModule
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'inicio',
+  },
 ];
 
 @NgModule({
