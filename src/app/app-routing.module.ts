@@ -16,6 +16,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'new',
+    loadChildren: () =>
+      import('./modules/nueva-sub/new-sub.module').then((m) => m.NewSubModule),
+  },
+  {
     path: '**',
     redirectTo: 'inicio',
   },
