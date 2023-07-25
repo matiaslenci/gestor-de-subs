@@ -19,6 +19,13 @@ export class GestionarSubPageComponent {
 
   //TODO: Traer desde rest
   password = 'contraseña123';
+
+  /**
+   * Cuando se quiere editar una subscripción esta en true
+   * Cuando se crea una nueva sub se setea en false y resetea todos los campos
+   * y oculta el boton de eliminar
+   */
+  editMode = true;
   /**
    * Esta función se llama cuando se hace clic en el SVG.
    * Cambia el valor de hidePassword al valor opuesto de su estado actual.
