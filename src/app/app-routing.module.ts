@@ -21,6 +21,13 @@ const routes: Routes = [
       import('./modules/nueva-sub/new-sub.module').then((m) => m.NewSubModule),
   },
   {
+    path: 'share',
+    loadChildren: () =>
+      import('./modules/compartir-sub/share-sub.module').then(
+        (m) => m.ShareSubModule
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'inicio',
   },

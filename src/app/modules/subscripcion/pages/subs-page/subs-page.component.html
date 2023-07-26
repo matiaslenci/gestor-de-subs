@@ -25,6 +25,7 @@
     <!-- COMPARTIR SUBSCRIPCION -->
     <div *ngIf="!compartido">
       <button
+        [routerLink]="'/share'"
         type="button"
         class="flex flex-row items-center justify-center w-10/12 gap-3 px-5 py-3 text-base font-medium text-white bg-blue-800 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-800 dark:hover:bg-blue-700 dark:focus:ring-gray-700 dark:border-gray-700"
       >
@@ -40,6 +41,7 @@
     <!-- AMIGOS -->
     <div *ngIf="compartido">
       <button
+        [routerLink]="'/share/list'"
         type="button"
         class="flex flex-row items-center justify-center w-10/12 gap-3 px-5 py-3 mb-2 mr-2 text-base font-medium text-center text-blue-700 border border-blue-700 rounded-lg hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
       >
