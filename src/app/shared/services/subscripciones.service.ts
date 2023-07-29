@@ -18,7 +18,7 @@ export class SubscripcionesService {
       color: 'verde',
     },
     {
-      nombre: 'Disney +',
+      nombre: 'Disney+',
       precio: 1000,
       img: 'https://download.logo.wine/logo/Disney%2B/Disney%2B-White-Logo.wine.png',
       color: 'azul',
