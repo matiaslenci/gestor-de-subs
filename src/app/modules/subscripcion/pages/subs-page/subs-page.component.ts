@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { OpcionesEliminarComponent } from '../../components/opciones-eliminar/opciones-eliminar.component';
 
 @Component({
   templateUrl: './subs-page.component.html',
@@ -31,15 +30,4 @@ export class SubsPageComponent {
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
-
-  /* TODO: dependiendo si es una subscripcion custom o no dar la opción de
-   eliminar subscripcion o que te de instrucciones de como darse de baja */
-  openBottomSheet(): void {
-    this._bottomSheet.open(OpcionesEliminarComponent);
-  }
-
-  /**
-   * Elimina de la lista de subcripciones
-   */
-  deleteSub() {}
 }
