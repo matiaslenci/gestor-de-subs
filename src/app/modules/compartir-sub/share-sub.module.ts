@@ -5,6 +5,7 @@ import { ListShareSubPageComponent } from './pages/list-share-sub-page/list-shar
 import { ShareSubRoutingModule } from './share-sub-routing.module';
 import { CardAmigosComponent } from './components/card-amigos/card-amigos.component';
 import { BotonAgregarComponent } from 'src/app/shared/components/boton-agregar/boton-agregar.component';
+import { BotonEliminarSubComponent } from 'src/app/shared/components/boton-eliminar-sub/boton-eliminar-sub.component';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,12 @@ import { BotonAgregarComponent } from 'src/app/shared/components/boton-agregar/b
     ListShareSubPageComponent,
     CardAmigosComponent,
   ],
-  imports: [CommonModule, ShareSubRoutingModule, BotonAgregarComponent],
+  imports: [
+    CommonModule,
+    ShareSubRoutingModule,
+    BotonAgregarComponent,
+    BotonEliminarSubComponent,
+  ],
   exports: [NewShareSubPageComponent, ListShareSubPageComponent],
 })
 export class ShareSubModule {}

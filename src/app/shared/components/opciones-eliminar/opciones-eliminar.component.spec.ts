@@ -8,7 +8,7 @@ describe('OpcionesEliminarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [OpcionesEliminarComponent]
+      imports: [OpcionesEliminarComponent]
     });
     fixture = TestBed.createComponent(OpcionesEliminarComponent);
     component = fixture.componentInstance;
