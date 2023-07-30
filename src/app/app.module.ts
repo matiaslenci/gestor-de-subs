@@ -7,6 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './modules/material/material.module';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { FooterComponent } from './core/layout/footer/footer.component';
+import { HomeModule } from './modules/home/home.module';
+import { SubscripcionModule } from './modules/subscripcion/subscripcion.module';
+import { RouterModule } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs, 'es-ES');
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
@@ -15,6 +22,9 @@ import { FooterComponent } from './core/layout/footer/footer.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    HomeModule,
+    SubscripcionModule,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

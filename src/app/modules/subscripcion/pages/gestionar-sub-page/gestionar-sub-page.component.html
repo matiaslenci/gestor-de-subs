@@ -1,0 +1,220 @@
+<form class="max-w-screen-xl px-6" [formGroup]="formSub">
+  <div class="flex flex-row flex-wrap items-center justify-start gap-5">
+    <div
+      class="flex flex-row w-16 h-16 rounded-full"
+      (click)="editIcon()"
+      [ngClass]="{
+        verde: sub.color === 'verde',
+        azul: sub.color === 'azul',
+        rojo: sub.color === 'rojo',
+        rosa: sub.color === 'rosa',
+        amarillo: sub.color === 'amarillo',
+
+      }"
+    >
+      <img
+        class="object-contain w-full h-full"
+        [src]="sub.img"
+        [alt]="sub.nombre"
+      />
+    </div>
+
+    <input
+      type="text"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-5/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-left"
+      formControlName="nombre"
+      placeholder="Subscripcion"
+    />
+  </div>
+
+  <!-- DATA -->
+  <div class="mt-8">
+    <ul
+      role="list"
+      class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
+    >
+      <!-- ESTADO DE PAGO -->
+      <li class="py-3 sm:py-4">
+        <div class="flex items-center">
+          <div class="flex-1 min-w-0">
+            <p
+              class="text-base font-medium text-gray-900 truncate dark:text-white"
+            >
+              Estado de pago
+            </p>
+          </div>
+          <select
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-6/12 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+            formControlName="estado"
+          >
+            <option *ngFor="let estado of estados" [value]="estado">
+              {{ estado | titlecase }}
+            </option>
+            <option selected [value]="null" disabled>
+              Seleciona un estado
+            </option>
+          </select>
+        </div>
+      </li>
+      <!-- PRECIO -->
+      <li class="py-3 sm:py-4">
+        <div class="flex items-center">
+          <div class="flex-1 min-w-0">
+            <p
+              class="text-base font-medium text-gray-900 truncate dark:text-white"
+            >
+              Precio
+            </p>
+          </div>
+
+          <span
+            class="inline-flex items-center justify-end text-black text-sm font-medium gap-2 py-0.5 rounded-full dark:text-white"
+          >
+            <input
+              type="text"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-5/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+              [value]="'$1000'"
+              placeholder="$0000"
+              formControlName="precio"
+            />
+          </span>
+        </div>
+      </li>
+      <!-- VENCIMIENTO -->
+      <li class="py-3 sm:py-4">
+        <div class="flex items-center">
+          <div class="flex-1 min-w-0">
+            <p
+              class="text-base font-medium text-gray-900 truncate dark:text-white"
+            >
+              Próximo Vencimiento
+            </p>
+          </div>
+          <span
+            class="inline-flex items-center justify-end text-black text-sm font-medium py-0.5 rounded-full dark:text-white"
+          >
+            <input
+              type="date"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+              formControlName="vencimiento"
+            />
+          </span>
+        </div>
+      </li>
+      <!-- PLAN -->
+      <!-- <li class="py-3 sm:py-4">
+        <div class="flex items-center">
+          <div class="flex-1 min-w-0">
+            <p
+              class="text-base font-medium text-gray-900 truncate dark:text-white"
+            >
+              Plan
+            </p>
+          </div>
+          <span
+            class="inline-flex items-center text-black text-sm font-medium py-0.5 rounded-full dark:text-white"
+          >
+            <select
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+            >
+              <option selected [value]="null">Premium</option>
+              <option [value]="null">Básico</option>
+              <option [value]="null">Vencido</option>
+            </select>
+          </span>
+        </div>
+      </li> -->
+      <!-- USUARIO -->
+      <li class="py-3 sm:py-4">
+        <div class="flex items-center">
+          <div class="flex-1 min-w-0">
+            <p
+              class="text-base font-medium text-gray-900 truncate dark:text-white"
+            >
+              Usuario
+            </p>
+          </div>
+          <span
+            class="inline-flex items-center text-black text-sm font-medium py-0.5 rounded-full dark:text-white"
+          >
+            <input
+              type="text"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+              [value]="'matias@gmail.com'"
+              placeholder="Email"
+              formControlName="usuario"
+            />
+          </span>
+        </div>
+      </li>
+      <!-- CONTRASEÑA -->
+      <li class="py-3 sm:py-4">
+        <div class="flex items-center">
+          <div class="flex-1 min-w-0">
+            <p
+              class="text-base font-medium text-gray-900 truncate dark:text-white"
+            >
+              Contraseña
+            </p>
+          </div>
+          <div
+            class="inline-flex items-center gap-3 text-black text-sm font-medium py-0.5 rounded-full dark:text-white input-container"
+          >
+            <input
+              [type]="hidePassword ? 'password' : 'text'"
+              id=""
+              class="block text-sm text-center text-gray-900 border border-gray-300 rounded-lg bg-gray-50 password-input focus:ring-blue-500 focus:border-blue-500 w-12/12 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Contraseña"
+              formControlName="password"
+            />
+
+            <div
+              (click)="togglePasswordVisibility()"
+              *ngIf="hidePassword"
+              class="icon"
+            >
+              <svg height="26" viewBox="0 -960 960 960" width="26">
+                <path
+                  d="m629-419-44-44q26-71-27-118t-115-24l-44-44q17-11 38-16t43-5q71 0 120.5 49.5T650-500q0 22-5.5 43.5T629-419Zm129 129-40-40q49-36 85.5-80.5T857-500q-50-111-150-175.5T490-740q-42 0-86 8t-69 19l-46-47q35-16 89.5-28T485-800q143 0 261.5 81.5T920-500q-26 64-67 117t-95 93Zm58 226L648-229q-35 14-79 21.5t-89 7.5q-146 0-265-81.5T40-500q20-52 55.5-101.5T182-696L56-822l42-43 757 757-39 44ZM223-654q-37 27-71.5 71T102-500q51 111 153.5 175.5T488-260q33 0 65-4t48-12l-64-64q-11 5-27 7.5t-30 2.5q-70 0-120-49t-50-121q0-15 2.5-30t7.5-27l-97-97Zm305 142Zm-116 58Z "
+                  fill="white"
+                />
+              </svg>
+            </div>
+            <div
+              (click)="togglePasswordVisibility()"
+              *ngIf="!hidePassword"
+              class="icon"
+            >
+              <svg height="26" viewBox="0 -960 960 960" width="26">
+                <path
+                  d="M480.118-330Q551-330 600.5-379.618q49.5-49.617 49.5-120.5Q650-571 600.382-620.5q-49.617-49.5-120.5-49.5Q409-670 359.5-620.382q-49.5 49.617-49.5 120.5Q310-429 359.618-379.5q49.617 49.5 120.5 49.5Zm-.353-58Q433-388 400.5-420.735q-32.5-32.736-32.5-79.5Q368-547 400.735-579.5q32.736-32.5 79.5-32.5Q527-612 559.5-579.265q32.5 32.736 32.5 79.5Q592-453 559.265-420.5q-32.736 32.5-79.5 32.5ZM480-200q-146 0-264-83T40-500q58-134 176-217t264-83q146 0 264 83t176 217q-58 134-176 217t-264 83Zm0-300Zm-.169 240Q601-260 702.5-325.5 804-391 857-500q-53-109-154.331-174.5-101.332-65.5-222.5-65.5Q359-740 257.5-674.5 156-609 102-500q54 109 155.331 174.5 101.332 65.5 222.5 65.5Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- Eliminar Subscripcion -->
+      <li class="py-3 cursor-pointer sm:py-4" *ngIf="editMode">
+        <app-boton-eliminar-sub></app-boton-eliminar-sub>
+      </li>
+    </ul>
+    <div class="flex flex-row justify-between mt-6 gap-7">
+      <button
+        type="button"
+        routerLink=""
+        class="focus:outline-none text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-red-700 dark:hover:bg-red-800 dark:focus:ring-red-900"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        [routerLink]="'/sub'"
+        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,99 @@
+<!-- TOTAL -->
+<div
+  class="flex flex-col items-center content-center justify-center gap-3"
+  (click)="showMensual = !showMensual"
+>
+  <h1 class="text-6xl font-extrabold dark:text-white">
+    ${{
+      showMensual
+        ? (precioMensual | number : "1.0-0" : "es-ES")
+        : (precioAnual | number : "1.0-0" : "es-ES")
+    }}
+  </h1>
+  <div class="flex-row items-center flexjustify-center">
+    <p class="text-2xl dark:text-white">
+      Total
+      <span class="text-2xl dark:text-gray-400">{{
+        showMensual ? "mensual" : "anual"
+      }}</span>
+    </p>
+  </div>
+  <!-- AGREGAR SUBSCRIPCION -->
+  <button
+    [routerLink]="'/new'"
+    type="button"
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-5"
+  >
+    Agregar Subscripción
+  </button>
+</div>
+<!-- MAIN -->
+<div
+  class="flex flex-col items-center content-center justify-center gap-3 mt-10"
+>
+  <!-- FILTRO -->
+  <div class="flex flex-row items-center justify-start gap-2 mt-10">
+    <p class="dark:text-white">Ordenar por</p>
+
+    <button
+      id="dropdownDefaultButton"
+      data-dropdown-toggle="dropdown"
+      class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-gray-200 px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-base inline-flex items-center"
+      type="button"
+    >
+      Mayor Precio
+      <svg
+        class="w-2.5 h-2.5 ml-2.5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 10 6"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m1 1 4 4 4-4"
+        />
+      </svg>
+    </button>
+    <!-- Dropdown menu -->
+    <div
+      id="dropdown"
+      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+    >
+      <ul
+        class="py-2 text-sm text-gray-700 dark:text-gray-200"
+        aria-labelledby="dropdownDefaultButton"
+      >
+        <li>
+          <a
+            href="#"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >Fecha vencimiento</a
+          >
+        </li>
+
+        <li>
+          <a
+            href="#"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >Pendientes de pago</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >Subscripciones compartidas</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- CARDS -->
+  <ul class="w-12/12">
+    <app-card></app-card>
+  </ul>
+</div>
