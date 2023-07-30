@@ -20,6 +20,12 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
   estados: any;
 
   /**
+   * id de la suscripción que se recupera por query params para
+   * setear subscripción
+   */
+  id: number = 0;
+
+  /**
    * Bool que inidica si ya agrego amigos a la subscripcion
    * Modifica el boton de compartir subscripción por otro si es true
    */
@@ -49,20 +55,27 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
       password: '',
     });
 
-    this.subSrv.getSubById(0).subscribe({
+    if ((this.editMode = false)) {
+      this.subSrv.getDefaultSubById(this.id).subscribe({
+        next: (res: any) => {
+          this.sub = res;
+
+          this.formSub.patchValue(res);
+        },
+        error: (error: Error) => {
+          console.error(`ERROR: No se pudo obtener la subscripción${error}`);
+        },
+      });
+    }
+
+    this.subSrv.getSubById(this.id).subscribe({
       next: (res: any) => {
         this.sub = res;
-        if (res.nombre) {
-          this.formSub.patchValue({ nombre: res.nombre });
-        }
+
+        this.formSub.patchValue({ nombre: res.nombre });
       },
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
-      },
-      complete: () => {
-        if (this.editMode) {
-          this.formSub.patchValue(this.sub);
-        }
       },
     });
 

@@ -5,17 +5,41 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class SubscripcionesService {
-  subscripciones: any = [
+  defaultSubs: any[] = [
     {
       id: 0,
       nombre: 'Netflix',
       precio: null,
       img: 'https://download.logo.wine/logo/Netflix/Netflix-Logo.wine.png',
       color: 'rojo',
+    },
+    {
+      id: 1,
+      nombre: 'Spotify',
+      precio: null,
+      img: '../../../assets/logos/spotify.png',
+      color: 'verde',
+    },
+    {
+      id: 2,
+      nombre: 'Disney+',
+      precio: null,
+      img: 'https://download.logo.wine/logo/Disney%2B/Disney%2B-White-Logo.wine.png',
+      color: 'azul',
+    },
+  ];
+
+  subscripciones: any = [
+    {
+      id: 0,
+      nombre: 'Netflix',
+      precio: 1000,
+      img: 'https://download.logo.wine/logo/Netflix/Netflix-Logo.wine.png',
+      color: 'rojo',
       vencimiento: '2023-07-05',
-      estado: '',
-      usuario: '',
-      password: '',
+      estado: 'pendiente',
+      usuario: 'matias@gmail',
+      password: 'password',
     },
     {
       id: 1,
@@ -24,9 +48,9 @@ export class SubscripcionesService {
       img: '../../../assets/logos/spotify.png',
       color: 'verde',
       vencimiento: '2023-07-05',
-      estado: '',
-      usuario: '',
-      password: '',
+      estado: 'pendiente',
+      usuario: 'matias@gmail',
+      password: 'password',
     },
     {
       id: 2,
@@ -35,13 +59,17 @@ export class SubscripcionesService {
       img: 'https://download.logo.wine/logo/Disney%2B/Disney%2B-White-Logo.wine.png',
       color: 'azul',
       vencimiento: '2023-07-05',
-      estado: '',
-      usuario: '',
-      password: '',
+      estado: 'pendiente',
+      usuario: 'matias@gmail',
+      password: 'password',
     },
   ];
 
   estados: any[] = [];
+
+  getDefaultSubById(id: number): Observable<any> {
+    return of(this.defaultSubs[id]);
+  }
 
   getSubById(id: number): Observable<any> {
     return of(this.subscripciones[id]);
