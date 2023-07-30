@@ -1,0 +1,16 @@
+.input-container {
+  position: relative;
+  display: inline-block;
+}
+
+.password-input {
+  padding-right: 40px; /* Crea espacio para el icono */
+}
+
+.icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
