@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -6,22 +7,48 @@ import { Injectable } from '@angular/core';
 export class SubscripcionesService {
   subscripciones: any = [
     {
+      id: 0,
       nombre: 'Netflix',
-      precio: 1000,
+      precio: null,
       img: 'https://download.logo.wine/logo/Netflix/Netflix-Logo.wine.png',
       color: 'rojo',
+      vencimiento: '2023-07-05',
+      estado: '',
+      usuario: '',
+      password: '',
     },
     {
+      id: 1,
       nombre: 'Spotify',
-      precio: 1000,
-      img: 'https://download.logo.wine/logo/Spotify/Spotify-Icon-Logo.wine.png',
+      precio: 600,
+      img: '../../../assets/logos/spotify.png',
       color: 'verde',
+      vencimiento: '2023-07-05',
+      estado: '',
+      usuario: '',
+      password: '',
     },
     {
+      id: 2,
       nombre: 'Disney+',
-      precio: 1000,
+      precio: 800,
       img: 'https://download.logo.wine/logo/Disney%2B/Disney%2B-White-Logo.wine.png',
       color: 'azul',
+      vencimiento: '2023-07-05',
+      estado: '',
+      usuario: '',
+      password: '',
     },
   ];
+
+  estados: any[] = [];
+
+  getSubById(id: number): Observable<any> {
+    return of(this.subscripciones[id]);
+  }
+
+  getEstadosPago(): Observable<any> {
+    this.estados = ['pendiente', 'pagado', 'vencido'];
+    return of(this.estados);
+  }
 }
