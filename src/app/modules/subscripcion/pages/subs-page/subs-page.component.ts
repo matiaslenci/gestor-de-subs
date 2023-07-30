@@ -34,7 +34,6 @@ export class SubsPageComponent implements OnInit {
     this.subSrv.getSubById(0).subscribe({
       next: (res: any) => {
         this.sub = res;
-        console.log(this.sub);
       },
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);

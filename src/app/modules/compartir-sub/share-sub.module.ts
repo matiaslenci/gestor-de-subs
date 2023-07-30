@@ -6,6 +6,7 @@ import { ShareSubRoutingModule } from './share-sub-routing.module';
 import { CardAmigosComponent } from './components/card-amigos/card-amigos.component';
 import { BotonAgregarComponent } from 'src/app/shared/components/boton-agregar/boton-agregar.component';
 import { BotonEliminarSubComponent } from 'src/app/shared/components/boton-eliminar-sub/boton-eliminar-sub.component';
+import { LogoSubComponent } from 'src/app/shared/components/logo-sub/logo-sub.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { BotonEliminarSubComponent } from 'src/app/shared/components/boton-elimi
     ShareSubRoutingModule,
     BotonAgregarComponent,
     BotonEliminarSubComponent,
+    LogoSubComponent,
   ],
   exports: [NewShareSubPageComponent, ListShareSubPageComponent],
 })
