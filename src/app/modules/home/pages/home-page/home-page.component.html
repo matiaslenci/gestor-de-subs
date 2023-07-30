@@ -1,9 +1,21 @@
 <!-- TOTAL -->
-<div class="flex flex-col items-center content-center justify-center gap-3">
-  <h1 class="text-6xl font-extrabold dark:text-white">$1500</h1>
+<div
+  class="flex flex-col items-center content-center justify-center gap-3"
+  (click)="showMensual = !showMensual"
+>
+  <h1 class="text-6xl font-extrabold dark:text-white">
+    ${{
+      showMensual
+        ? (precioMensual | number : "1.0-0" : "es-ES")
+        : (precioAnual | number : "1.0-0" : "es-ES")
+    }}
+  </h1>
   <div class="flex-row items-center flexjustify-center">
     <p class="text-2xl dark:text-white">
-      Total <span class="text-2xl dark:text-gray-400">mensual</span>
+      Total
+      <span class="text-2xl dark:text-gray-400">{{
+        showMensual ? "mensual" : "anual"
+      }}</span>
     </p>
   </div>
   <!-- AGREGAR SUBSCRIPCION -->
@@ -13,7 +25,6 @@
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-5"
   >
     Agregar Subscripción
-    <!-- TODO:Agregar + -->
   </button>
 </div>
 <!-- MAIN -->

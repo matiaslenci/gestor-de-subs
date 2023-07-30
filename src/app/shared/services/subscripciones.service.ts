@@ -44,7 +44,7 @@ export class SubscripcionesService {
     {
       id: 1,
       nombre: 'Spotify',
-      precio: 600,
+      precio: 1000,
       img: '../../../assets/logos/spotify.png',
       color: 'verde',
       vencimiento: '2023-07-05',
@@ -55,7 +55,7 @@ export class SubscripcionesService {
     {
       id: 2,
       nombre: 'Disney+',
-      precio: 800,
+      precio: 1000,
       img: 'https://download.logo.wine/logo/Disney%2B/Disney%2B-White-Logo.wine.png',
       color: 'azul',
       vencimiento: '2023-07-05',
