@@ -11,4 +11,5 @@ import { RouterModule } from '@angular/router';
 export class BotonAgregarComponent {
   @Input({ required: true }) titulo: string = '';
   @Input({ required: true }) ruta: string = '';
+  @Input() fullW: boolean = false;
 }

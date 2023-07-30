@@ -1,25 +1,11 @@
 <li *ngFor="let sub of subsSrv.subscripciones">
   <div
     [routerLink]="'/sub/edit'"
-    class="flex max-w-sm px-6 py-5 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    class="flex px-6 py-5 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <div class="flex flex-row w-full gap-5">
       <!-- IMG -->
-      <div>
-        <div
-          class="flex flex-row w-16 h-16 rounded-full"
-          [ngClass]="{
-            verde: sub.color === 'verde',
-            azul: sub.color === 'azul',
-            rojo: sub.color === 'rojo',
-            rosa: sub.color === 'rosa',
-            amarillo: sub.color === 'amarillo',
-
-          }"
-        >
-          <img class="object-contain w-full h-full" [src]="sub.img" alt="" />
-        </div>
-      </div>
+      <app-logo-sub [sub]="sub"></app-logo-sub>
 
       <!-- CONTENT -->
 
