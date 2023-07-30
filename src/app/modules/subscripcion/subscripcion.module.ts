@@ -7,6 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { GestionarSubPageComponent } from './pages/gestionar-sub-page/gestionar-sub-page.component';
 import { BotonEliminarSubComponent } from 'src/app/shared/components/boton-eliminar-sub/boton-eliminar-sub.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LogoSubComponent } from 'src/app/shared/components/logo-sub/logo-sub.component';
 
 @NgModule({
   declarations: [SubsPageComponent, GestionarSubPageComponent],
@@ -17,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BotonEliminarSubComponent,
     FormsModule,
     ReactiveFormsModule,
+    LogoSubComponent,
   ],
   exports: [SubsPageComponent],
 })
