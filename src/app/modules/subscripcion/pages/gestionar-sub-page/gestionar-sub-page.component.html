@@ -1,23 +1,6 @@
 <form class="max-w-screen-xl px-6" [formGroup]="formSub">
   <div class="flex flex-row flex-wrap items-center justify-start gap-5">
-    <div
-      class="flex flex-row w-16 h-16 rounded-full"
-      (click)="editIcon()"
-      [ngClass]="{
-        verde: sub.color === 'verde',
-        azul: sub.color === 'azul',
-        rojo: sub.color === 'rojo',
-        rosa: sub.color === 'rosa',
-        amarillo: sub.color === 'amarillo',
-
-      }"
-    >
-      <img
-        class="object-contain w-full h-full"
-        [src]="sub.img"
-        [alt]="sub.nombre"
-      />
-    </div>
+    <app-logo-sub [sub]="sub"></app-logo-sub>
 
     <input
       type="text"
