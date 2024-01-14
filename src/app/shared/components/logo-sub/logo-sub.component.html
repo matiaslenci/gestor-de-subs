@@ -1,7 +1,6 @@
-<div>
-  <div
-    class="flex flex-row w-16 h-16 rounded-full"
-    [ngClass]="{
+<div
+  class="flex flex-row items-center justify-center w-16 h-16 rounded-full"
+  [ngClass]="{
       verde: sub.color === 'verde',
       azul: sub.color === 'azul',
       rojo: sub.color === 'rojo',
@@ -9,7 +8,8 @@
       amarillo: sub.color === 'amarillo',
 
     }"
-  >
-    <img class="object-contain w-full h-full" [src]="sub.img" alt="" />
-  </div>
+>
+  <span class="text-2xl font-medium text-gray-600 dark:text-gray-300">{{
+    sub.inicial
+  }}</span>
 </div>
