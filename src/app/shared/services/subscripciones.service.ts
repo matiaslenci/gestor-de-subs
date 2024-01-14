@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { ISub } from 'src/app/core/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -10,31 +11,31 @@ export class SubscripcionesService {
       id: 0,
       nombre: 'Netflix',
       precio: null,
-      img: 'https://download.logo.wine/logo/Netflix/Netflix-Logo.wine.png',
+      inicial: '',
       color: 'rojo',
     },
     {
       id: 1,
       nombre: 'Spotify',
       precio: null,
-      img: '../../../assets/logos/spotify.png',
+      inicial: '',
       color: 'verde',
     },
     {
       id: 2,
       nombre: 'Disney+',
       precio: null,
-      img: 'https://download.logo.wine/logo/Disney%2B/Disney%2B-White-Logo.wine.png',
+      inicial: '',
       color: 'azul',
     },
   ];
 
-  subscripciones: any = [
+  subscripciones: ISub[] = [
     {
       id: 0,
       nombre: 'Netflix',
       precio: 1000,
-      img: 'https://download.logo.wine/logo/Netflix/Netflix-Logo.wine.png',
+      inicial: 'N',
       color: 'rojo',
       vencimiento: '2023-07-05',
       estado: 'pendiente',
@@ -45,7 +46,7 @@ export class SubscripcionesService {
       id: 1,
       nombre: 'Spotify',
       precio: 1000,
-      img: '../../../assets/logos/spotify.png',
+      inicial: 'S',
       color: 'verde',
       vencimiento: '2023-07-05',
       estado: 'pendiente',
@@ -56,7 +57,7 @@ export class SubscripcionesService {
       id: 2,
       nombre: 'Disney+',
       precio: 1000,
-      img: 'https://download.logo.wine/logo/Disney%2B/Disney%2B-White-Logo.wine.png',
+      inicial: 'D+',
       color: 'azul',
       vencimiento: '2023-07-05',
       estado: 'pendiente',
