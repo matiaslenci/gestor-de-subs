@@ -5,7 +5,7 @@ export interface ISub {
   inicial: string;
   color: string;
   vencimiento: string;
-  estado: string;
+  // estado: string;
   usuario: string;
   password: string;
 }
