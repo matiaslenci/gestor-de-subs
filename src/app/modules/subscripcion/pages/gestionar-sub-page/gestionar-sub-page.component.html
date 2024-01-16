@@ -1,23 +1,6 @@
 <form class="max-w-screen-xl px-6" [formGroup]="formSub">
   <div class="flex flex-row flex-wrap items-center justify-start gap-5">
-    <div
-      class="flex flex-row w-16 h-16 rounded-full"
-      (click)="editIcon()"
-      [ngClass]="{
-        verde: sub.color === 'verde',
-        azul: sub.color === 'azul',
-        rojo: sub.color === 'rojo',
-        rosa: sub.color === 'rosa',
-        amarillo: sub.color === 'amarillo',
-
-      }"
-    >
-      <img
-        class="object-contain w-full h-full"
-        [src]="sub.img"
-        [alt]="sub.nombre"
-      />
-    </div>
+    <app-logo-sub [sub]="sub"></app-logo-sub>
 
     <input
       type="text"
@@ -102,7 +85,7 @@
         </div>
       </li>
       <!-- PLAN -->
-      <!-- <li class="py-3 sm:py-4">
+      <!--  <li class="py-3 sm:py-4">
         <div class="flex items-center">
           <div class="flex-1 min-w-0">
             <p
@@ -117,9 +100,10 @@
             <select
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
             >
-              <option selected [value]="null">Premium</option>
+              <option selected [value]="null" disabled>Plan</option>
+              <option [value]="null">Premium</option>
+              <option [value]="null">Medio</option>
               <option [value]="null">Básico</option>
-              <option [value]="null">Vencido</option>
             </select>
           </span>
         </div>
