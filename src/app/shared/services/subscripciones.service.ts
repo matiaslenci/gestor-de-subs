@@ -1,41 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ISub } from 'src/app/core/interfaces';
+import { IDefaultSub, ISub } from 'src/app/core/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubscripcionesService {
-  defaultSubs: any[] = [
-    {
-      id: 0,
-      nombre: 'Netflix',
-      precio: null,
-      inicial: '',
-      color: 'rojo',
-    },
-    {
-      id: 1,
-      nombre: 'Spotify',
-      precio: null,
-      inicial: '',
-      color: 'verde',
-    },
-    {
-      id: 2,
-      nombre: 'Disney+',
-      precio: null,
-      inicial: '',
-      color: 'azul',
-    },
-  ];
+  defaultSubs: IDefaultSub[] = [];
 
   subscripciones: ISub[] = [
     {
       id: 0,
-      nombre: 'Netflix',
+      name: 'Netflix',
       precio: 1000,
-      inicial: 'N',
+      logo: 'N',
       color: 'rojo',
       vencimiento: '2023-07-05',
       usuario: 'matias@gmail',
@@ -43,9 +23,9 @@ export class SubscripcionesService {
     },
     {
       id: 1,
-      nombre: 'Spotify',
+      name: 'Spotify',
       precio: 1000,
-      inicial: 'S',
+      logo: 'S',
       color: 'verde',
       vencimiento: '2023-07-05',
       usuario: 'matias@gmail',
@@ -53,9 +33,9 @@ export class SubscripcionesService {
     },
     {
       id: 2,
-      nombre: 'Disney+',
+      name: 'Disney+',
       precio: 1000,
-      inicial: 'D+',
+      logo: 'D+',
       color: 'azul',
       vencimiento: '2023-07-05',
       usuario: 'matias@gmail',
@@ -65,8 +45,19 @@ export class SubscripcionesService {
 
   estados: any[] = [];
 
+  constructor(private http: HttpClient) {}
+
+  getDefaultSub(): void {
+    this.http.get<any>(environment.default + 'list').subscribe({
+      next: (res) => {
+        this.defaultSubs = res.data;
+        console.log(this.defaultSubs);
+      },
+    });
+  }
+
   getDefaultSubById(id: number): Observable<any> {
-    return of(this.defaultSubs[id]);
+    return this.http.get(environment.default + 'list/' + id);
   }
 
   getSubById(id: number): Observable<any> {

@@ -12,6 +12,7 @@ import { SubscripcionModule } from './modules/subscripcion/subscripcion.module';
 import { RouterModule } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -24,6 +25,7 @@ registerLocaleData(localeEs, 'es-ES');
     MaterialModule,
     HomeModule,
     SubscripcionModule,
+    HttpClientModule,
     RouterModule,
   ],
   providers: [],

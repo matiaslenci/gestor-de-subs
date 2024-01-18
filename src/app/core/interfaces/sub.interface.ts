@@ -1,8 +1,8 @@
 export interface ISub {
   id: number;
-  nombre: string;
+  name: string;
   precio: number;
-  inicial: string;
+  logo: string;
   color: string;
   vencimiento: string;
   // estado: string;
