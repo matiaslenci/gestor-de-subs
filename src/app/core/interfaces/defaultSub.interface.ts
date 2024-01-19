@@ -1,6 +1,6 @@
 export interface IDefaultSub {
   id: number;
-  name: string;
+  nombre: string;
   logo: string;
   color: Colores;
 }

@@ -1,6 +1,6 @@
 export interface ISub {
   id: number;
-  name: string;
+  nombre: string;
   precio: number;
   logo: string;
   color: string;

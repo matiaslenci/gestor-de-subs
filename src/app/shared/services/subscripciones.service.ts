@@ -13,7 +13,7 @@ export class SubscripcionesService {
   subscripciones: ISub[] = [
     {
       id: 0,
-      name: 'Netflix',
+      nombre: 'Netflix',
       precio: 1000,
       logo: 'N',
       color: 'rojo',
@@ -23,7 +23,7 @@ export class SubscripcionesService {
     },
     {
       id: 1,
-      name: 'Spotify',
+      nombre: 'Spotify',
       precio: 1000,
       logo: 'S',
       color: 'verde',
@@ -33,7 +33,7 @@ export class SubscripcionesService {
     },
     {
       id: 2,
-      name: 'Disney+',
+      nombre: 'Disney+',
       precio: 1000,
       logo: 'D+',
       color: 'azul',
