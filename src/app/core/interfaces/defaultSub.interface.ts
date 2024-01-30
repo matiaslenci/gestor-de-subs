@@ -11,4 +11,6 @@ export enum Colores {
   azul = 'azul',
   verde = 'verde',
   rosa = 'rosa',
+  gris = 'gris',
+  morado = 'morado',
 }
