@@ -16,7 +16,8 @@ export class SubscripcionesService {
       nombre: 'Netflix',
       precio: 1000,
       logo: 'N',
-      color: 'rojo',
+      color: { id: 1, name: 'rojo' },
+
       vencimiento: '2023-07-05',
       usuario: 'matias@gmail',
       password: 'password',
@@ -26,7 +27,8 @@ export class SubscripcionesService {
       nombre: 'Spotify',
       precio: 1000,
       logo: 'S',
-      color: 'verde',
+      color: { id: 3, name: 'verde' },
+
       vencimiento: '2023-07-05',
       usuario: 'matias@gmail',
       password: 'password',
@@ -36,7 +38,7 @@ export class SubscripcionesService {
       nombre: 'Disney+',
       precio: 1000,
       logo: 'D+',
-      color: 'azul',
+      color: { id: 2, name: 'azul' },
       vencimiento: '2023-07-05',
       usuario: 'matias@gmail',
       password: 'password',
@@ -48,10 +50,12 @@ export class SubscripcionesService {
   constructor(private http: HttpClient) {}
 
   getDefaultSub(): void {
-    this.http.get<any>(environment.default + 'list').subscribe({
+    this.http.get<IDefaultSub[]>(environment.default).subscribe({
       next: (res) => {
-        this.defaultSubs = res.data;
-        console.log(this.defaultSubs);
+        this.defaultSubs = res;
+      },
+      error: (error) => {
+        console.error(error);
       },
     });
   }

@@ -1,8 +1,15 @@
 export interface IDefaultSub {
   id: number;
-  nombre: string;
+  name: string;
   logo: string;
-  color: Colores;
+  slug: string;
+  colorId: number;
+  color: Color;
+}
+
+interface Color {
+  id: number;
+  name: string;
 }
 
 export enum Colores {
