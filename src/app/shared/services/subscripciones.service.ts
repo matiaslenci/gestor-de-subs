@@ -60,8 +60,10 @@ export class SubscripcionesService {
     });
   }
 
-  getDefaultSubById(id: number): Observable<any> {
-    return this.http.get(environment.default + 'list/' + id);
+  getDefaultSubById(id: string): Observable<any> {
+    console.log(id);
+
+    return this.http.get(environment.default + '/' + id);
   }
 
   getSubById(id: number): Observable<any> {
