@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { IDefaultSub } from 'src/app/core/interfaces';
 
 @Component({
   templateUrl: './gestionar-sub-page.component.html',
@@ -23,7 +25,7 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
    * id de la suscripción que se recupera por query params para
    * setear subscripción
    */
-  id: number = 0;
+  id: string | null = '';
 
   /**
    * Bool que inidica si ya agrego amigos a la subscripcion
@@ -43,9 +45,17 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
    */
   editMode = false;
 
-  constructor(public subSrv: SubscripcionesService, private fb: FormBuilder) {}
+  constructor(
+    public subSrv: SubscripcionesService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.id = params.get('id');
+    });
+
     this.formSub = this.fb.group({
       nombre: ['', Validators.required],
       estado: '',
@@ -56,7 +66,7 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
     });
 
     if ((this.editMode = false)) {
-      this.subSrv.getDefaultSubById(this.id).subscribe({
+      this.subSrv.getDefaultSubById(this.id ?? '').subscribe({
         next: (res: any) => {
           this.sub = res;
 
@@ -68,11 +78,12 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.subSrv.getSubById(this.id).subscribe({
-      next: (res: any) => {
+    this.subSrv.getDefaultSubById(this.id ?? '').subscribe({
+      next: (res: IDefaultSub) => {
         this.sub = res;
+        console.log(res);
 
-        this.formSub.patchValue({ nombre: res.nombre });
+        this.formSub.patchValue({ nombre: res.name });
       },
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
