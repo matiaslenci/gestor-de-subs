@@ -50,7 +50,7 @@ export class SubscripcionesService {
   constructor(private http: HttpClient) {}
 
   getDefaultSub(): void {
-    this.http.get<IDefaultSub[]>(environment.default).subscribe({
+    this.http.get<IDefaultSub[]>(environment.default + '?limit=100').subscribe({
       next: (res) => {
         this.defaultSubs = res;
       },

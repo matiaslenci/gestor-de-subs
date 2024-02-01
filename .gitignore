@@ -5,6 +5,7 @@ environmment.development.ts
 # Compiled output
 #/dist
 /tmp
+/dist
 /out-tsc
 /bazel-out
 
