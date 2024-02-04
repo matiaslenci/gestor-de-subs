@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthModule } from './modules/auth/auth.module';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -24,6 +25,7 @@ registerLocaleData(localeEs, 'es-ES');
     BrowserAnimationsModule,
     MaterialModule,
     HomeModule,
+    AuthModule,
     SubscripcionModule,
     HttpClientModule,
     RouterModule,

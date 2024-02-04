@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
     path: 'inicio',
     loadChildren: () =>
@@ -27,6 +26,13 @@ const routes: Routes = [
         (m) => m.ShareSubModule
       ),
   },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+
   {
     path: '**',
     redirectTo: 'inicio',
