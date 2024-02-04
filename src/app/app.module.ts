@@ -14,11 +14,12 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './modules/auth/auth.module';
+import { PagesComponent } from './core/pages/pages/pages.component';
 
 registerLocaleData(localeEs, 'es-ES');
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, PagesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
