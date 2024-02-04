@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'app-register-page',
   template: `<app-auth-layout>
-    <app-login />
+    <app-register />
   </app-auth-layout> `,
 })
-export class LoginPageComponent {}
+export class RegisterPageComponent {}
