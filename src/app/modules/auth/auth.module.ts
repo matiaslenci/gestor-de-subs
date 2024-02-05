@@ -7,6 +7,8 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RouterModule } from '@angular/router';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,14 @@ import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component'
     RegisterPageComponent,
     AuthLayoutComponent,
   ],
-  imports: [CommonModule, AuthRoutingModule, RouterModule],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    RouterModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   exports: [AuthRoutingModule],
 })
 export class AuthModule {}
