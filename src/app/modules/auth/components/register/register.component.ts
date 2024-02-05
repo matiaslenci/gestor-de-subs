@@ -26,18 +26,20 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const { confirmPassword, ...dataRegister } = this.form.value;
+    if (this.form.valid) {
+      const { confirmPassword, ...dataRegister } = this.form.value;
 
-    this.authSrv.register(dataRegister).subscribe({
-      next: () => {
-        this.form.reset();
-        alert('Registro exitoso');
-        //TODO: Utilizar toasts y redirigir al inicio
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
+      this.authSrv.register(dataRegister).subscribe({
+        next: () => {
+          this.form.reset();
+          alert('Registro exitoso');
+          //TODO: Utilizar toasts y redirigir al inicio
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+    }
   }
 
   get confirmPassword() {
