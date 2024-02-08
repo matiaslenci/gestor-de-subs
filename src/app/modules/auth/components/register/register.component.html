@@ -7,8 +7,17 @@
       type="text"
       id="fullName"
       formControlName="fullName"
+      placeholder="Nombre y Apellido"
       class="border text-base rounded-lg py-3 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
     />
+    <div>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="email?.hasError('required') && email?.touched"
+      >
+        El Nombre y apellido son obligatorios.
+      </p>
+    </div>
   </div>
   <div>
     <label for="email" class="block mb-2 text-base font-medium text-white"
@@ -18,8 +27,23 @@
       type="email"
       id="email"
       formControlName="email"
+      placeholder="nombre@email.com"
       class="border text-base py-3 rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
     />
+    <div>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="email?.hasError('required') && email?.touched"
+      >
+        El email es obligatorio.
+      </p>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="email?.hasError('email') && email?.touched"
+      >
+        Debe utilizar un email valido
+      </p>
+    </div>
   </div>
   <div>
     <label for="password" class="block mb-2 text-base font-medium text-white"
@@ -29,14 +53,22 @@
       type="password"
       id="password"
       formControlName="password"
+      placeholder="Contraseña"
       class="border text-base rounded-lg py-3 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
     />
-    <div class="h-4">
+    <div>
       <p
         class="block mb-2 text-base font-medium text-red-500"
         *ngIf="password?.hasError('required') && password?.touched"
       >
         La contraseña es obligatoria.
+      </p>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="password?.hasError('passwordRequirements') && password?.touched"
+      >
+        La contraseña debe tener almenos una mayúscula, una minúscula y un
+        numero
       </p>
     </div>
   </div>
@@ -44,12 +76,13 @@
     <label
       for="repeatPassword"
       class="block mb-2 text-base font-medium text-white"
-      >Repita su contraseña</label
+      >Confirme contraseña</label
     >
     <input
       type="password"
       id="repeatPassword"
       formControlName="confirmPassword"
+      placeholder="Repita su contraseña"
       class="border text-base rounded-lg py-3 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
     />
     <!-- Mensaje de error si las contraseñas no coinciden -->

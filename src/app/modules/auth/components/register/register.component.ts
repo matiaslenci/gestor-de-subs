@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordMatchValidator } from 'src/app/shared/utils';
+import {
+  passwordMatchValidator,
+  passwordValidator,
+} from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-register',
@@ -16,8 +19,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group(
       {
-        email: ['', Validators.required],
-        password: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, passwordValidator]],
         fullName: ['', Validators.required],
         confirmPassword: ['', Validators.required],
       },
@@ -32,7 +35,7 @@ export class RegisterComponent implements OnInit {
       this.authSrv.register(dataRegister).subscribe({
         next: () => {
           this.form.reset();
-          alert('Registro exitoso');
+          console.log('Registro exitoso');
           //TODO: Utilizar toasts y redirigir al inicio
         },
         error: (err) => {
