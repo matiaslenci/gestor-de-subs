@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SubscripcionesService {
+  url: string = environment.api;
+
   defaultSubs: IDefaultSub[] = [];
 
   subscripciones: ISub[] = [
@@ -50,20 +52,22 @@ export class SubscripcionesService {
   constructor(private http: HttpClient) {}
 
   getDefaultSub(): void {
-    this.http.get<IDefaultSub[]>(environment.default + '?limit=100').subscribe({
-      next: (res) => {
-        this.defaultSubs = res;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+    this.http
+      .get<IDefaultSub[]>(this.url + 'default-sub' + '?limit=100')
+      .subscribe({
+        next: (res) => {
+          this.defaultSubs = res;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
   }
 
   getDefaultSubById(id: string): Observable<any> {
     console.log(id);
 
-    return this.http.get(environment.default + '/' + id);
+    return this.http.get(this.url + 'default-sub' + '/' + id);
   }
 
   getSubById(id: number): Observable<any> {
