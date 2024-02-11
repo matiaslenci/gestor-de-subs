@@ -1,5 +1,5 @@
 <form class="mx-6 mt-5" [formGroup]="form">
-  <div class="mb-5">
+  <div class="">
     <label for="email" class="block mb-2 text-base font-medium text-white"
       >Correo electrónico</label
     >
@@ -11,7 +11,21 @@
       placeholder="Ingrese su correo electrónico"
     />
   </div>
-  <div class="mb-8">
+  <div>
+    <p
+      class="block mb-2 text-base font-medium text-red-500"
+      *ngIf="email?.hasError('required') && email?.touched"
+    >
+      El email es obligatorio.
+    </p>
+    <p
+      class="block mb-2 text-base font-medium text-red-500"
+      *ngIf="email?.hasError('email') && email?.touched"
+    >
+      Debe utilizar un email valido
+    </p>
+  </div>
+  <div class="mt-5">
     <label for="password" class="block mb-2 text-base font-medium text-white"
       >Contraseña</label
     >
@@ -23,27 +37,40 @@
       class="border text-base rounded-lg py-3 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
     />
   </div>
-
+  <div>
+    <p
+      class="block text-base font-medium text-red-500"
+      *ngIf="password?.hasError('required') && password?.touched"
+    >
+      La contraseña es obligatoria.
+    </p>
+  </div>
   <button
     (click)="login()"
     type="submit"
-    class="w-full px-5 py-4 text-base font-medium text-center text-white bg-blue-600 rounded-lg focus:ring-4 focus:outline-none hover:bg-blue-700 focus:ring-blue-800"
+    class="w-full px-5 py-4 mt-8 text-base font-medium text-center text-white bg-blue-600 rounded-lg focus:ring-4 focus:outline-none hover:bg-blue-700 focus:ring-blue-800"
   >
     Iniciar Sesión
   </button>
+
+  <div class="my-4" *ngIf="errorLogin">
+    <p class="block mb-2 text-base font-medium text-red-500">
+      El correo electrónico o la contraseña son incorrectos.
+    </p>
+  </div>
 </form>
 
 <div class="mx-6">
-  <p class="mt-6">
+  <p class="pt-6">
     <a href="#" class="font-normal text-blue-500 underline hover:no-underline"
       >Olvide mi contraseña</a
     >
   </p>
 
-  <div class="inline-flex items-center justify-center w-full">
-    <hr class="w-full h-px bg-gray-200 border-0 my-7 dark:bg-gray-700" />
+  <div class="inline-flex items-center justify-center w-full my-7">
+    <hr class="w-full h-px bg-gray-700 border-0" />
     <span
-      class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900"
+      class="absolute px-3 font-medium text-white -translate-x-1/2 bg-gray-900 left-1/2"
       >o</span
     >
   </div>

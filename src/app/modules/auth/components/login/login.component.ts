@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   form: FormGroup = new FormGroup({});
+  errorLogin = false;
 
   constructor(
     private authSrv: AuthService,
@@ -19,9 +20,17 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+  }
+
+  get email() {
+    return this.form.get('email');
+  }
+
+  get password() {
+    return this.form.get('password');
   }
 
   login() {
@@ -30,16 +39,20 @@ export class LoginComponent {
         next: () => {
           this.form.reset();
           console.log('Login exitoso'); //TODO: Utilizar toasts
+          this.errorLogin = true;
           this.router.navigateByUrl('/inicio');
         },
         error: (err) => {
           console.error(err);
+          this.errorLogin = true;
           console.log('Ocurrio un error!!'); //TODO: Utilizar toasts
         },
         complete() {
           console.log('exito');
         },
       });
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 }
