@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import {
   AuthStatus,
   ICheckStatus,
@@ -64,7 +64,8 @@ export class AuthService {
     return this.http.post<ILoginResponse>(`${this.url}login`, data).pipe(
       tap((res) => {
         this.saveCredentials(res);
-      })
+      }),
+      catchError((err) => throwError(() => err.error.message))
     );
   }
 
@@ -72,7 +73,8 @@ export class AuthService {
     return this.http.post<IRegisterResponse>(`${this.url}register`, data).pipe(
       tap((res) => {
         this.saveCredentials(res);
-      })
+      }),
+      catchError((err) => throwError(() => err.error.message))
     );
   }
 
