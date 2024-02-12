@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './core/pages/pages.component';
+import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'inicio',
