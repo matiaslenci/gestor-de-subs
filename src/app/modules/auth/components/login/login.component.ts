@@ -45,7 +45,6 @@ export class LoginComponent {
         error: (err) => {
           console.error(err);
           this.errorLogin = true;
-          console.log('Ocurrio un error!!'); //TODO: Utilizar toasts
         },
         complete() {
           console.log('exito');

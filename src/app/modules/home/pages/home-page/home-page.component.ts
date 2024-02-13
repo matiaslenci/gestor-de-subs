@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed } from '@angular/core';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 
 @Component({
@@ -6,18 +7,17 @@ import { SubscripcionesService } from 'src/app/shared/services/subscripciones.se
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
-  /**
-   * Gasto total mensual de subscripciones
-   */
   precioMensual: number = 0;
 
-  /**
-   * Gasto total anual de subscripciones
-   */
   precioAnual: number = 0;
 
   showMensual: boolean = true;
-  constructor(private subSrv: SubscripcionesService) {}
+
+  user = computed(() => this.authSrv.currentUser());
+  constructor(
+    private subSrv: SubscripcionesService,
+    private authSrv: AuthService
+  ) {}
   ngOnInit(): void {
     for (let i = 0; i < this.subSrv.subscripciones.length; i++) {
       this.precioMensual =

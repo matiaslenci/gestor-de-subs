@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './core/pages/pages.component';
+import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './core/guards';
 
 const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
+    canActivate: [isAuthenticatedGuard],
     children: [
       {
         path: 'inicio',
@@ -40,6 +42,7 @@ const routes: Routes = [
 
   {
     path: 'auth',
+    canActivate: [isNotAuthenticatedGuard],
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },

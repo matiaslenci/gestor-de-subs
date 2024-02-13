@@ -2,3 +2,8 @@ export * from '../interfaces/sub.interface';
 export * from '../interfaces/defaultSub.interface';
 export * from '../interfaces/register.interface';
 export * from '../interfaces/login.interface';
+export * from '../interfaces/auth-status.enum';
+export * from '../interfaces/user.interface';
+export * from '../interfaces/register-response.interface';
+export * from '../interfaces/login-response.interface';
+export * from '../interfaces/check-status.inteface';
