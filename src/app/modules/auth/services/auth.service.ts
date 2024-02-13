@@ -40,6 +40,8 @@ export class AuthService {
 
   public checkAuthStatus(): Observable<boolean> {
     if (!this.token) {
+      this.logout();
+
       return of(false);
     }
 
@@ -63,15 +65,6 @@ export class AuthService {
       );
   }
 
-  public login(data: any) {
-    return this.http.post<ILoginResponse>(`${this.url}login`, data).pipe(
-      tap((res) => {
-        this.saveCredentials(res);
-      }),
-      catchError((err) => throwError(() => err.error.message))
-    );
-  }
-
   public register(data: IRegister) {
     return this.http.post<IRegisterResponse>(`${this.url}register`, data).pipe(
       tap((res) => {
@@ -81,21 +74,24 @@ export class AuthService {
     );
   }
 
-  private saveCredentials(res: IResponse) {
-    const { token, user } = res;
-    this._authStatus.set(AuthStatus.authenticated);
-    this._currentUser.set(user);
-    this.token = token;
+  public login(data: any) {
+    return this.http.post<ILoginResponse>(`${this.url}login`, data).pipe(
+      tap((res) => {
+        this.saveCredentials(res);
+      }),
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
-
-  private clearCredentials() {
+  public logout() {
     this._authStatus.set(AuthStatus.notAuthenticated);
     this._currentUser.set(null);
     this.token = '';
   }
 
-  public logout() {
-    this.clearCredentials();
-    this.router.navigateByUrl('/auth/login');
+  private saveCredentials(res: IResponse) {
+    const { token, user } = res;
+    this._authStatus.set(AuthStatus.authenticated);
+    this._currentUser.set(user);
+    this.token = token;
   }
 }
