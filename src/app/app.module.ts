@@ -12,9 +12,10 @@ import { SubscripcionModule } from './modules/subscripcion/subscripcion.module';
 import { RouterModule } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './modules/auth/auth.module';
 import { PagesComponent } from './core/pages/pages.component';
+import { AuthInterceptor } from './core/interceptor/auth.interceptor';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -36,7 +37,13 @@ registerLocaleData(localeEs, 'es-ES');
     HttpClientModule,
     RouterModule,
   ],
-  providers: [],
+  providers: [
+    /*     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }, */
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
