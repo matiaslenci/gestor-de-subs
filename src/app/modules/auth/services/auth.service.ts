@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import {
   AuthStatus,
   ICheckStatus,
@@ -26,7 +26,9 @@ export class AuthService {
   public currentUser = computed(() => this._currentUser());
   public authStatus = computed(() => this._authStatus());
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.checkAuthStatus().subscribe();
+  }
 
   get token() {
     return localStorage.getItem(environment.pk + 'token') || '';
@@ -36,28 +38,29 @@ export class AuthService {
     localStorage.setItem(environment.pk + 'token', value);
   }
 
-  public validateJWT() {
+  public checkAuthStatus(): Observable<boolean> {
+    if (!this.token) {
+      return of(false);
+    }
+
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
 
-    this.http
+    return this.http
       .get<ICheckStatus>(`${this.url}check-status`, {
         headers,
       })
-      .subscribe({
-        next: ({ user }) => {
-          this._authStatus.set(AuthStatus.authenticated);
-          this._currentUser.set(user);
-        },
-        error: (err) => {
-          if (err.statusCode === 401) {
-            this.logout();
-          } else {
-            console.error(err);
-          }
-        },
-      });
+      .pipe(
+        map((res) => {
+          this.saveCredentials(res);
+          return true;
+        }),
+        catchError(() => {
+          this.logout();
+          return of(false);
+        })
+      );
   }
 
   public login(data: any) {

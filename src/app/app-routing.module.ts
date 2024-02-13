@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './core/pages/pages.component';
-import { authGuard } from './core/guards/auth.guard';
+import { isAuthenticatedGuard } from './core/guards/is-authenticated.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
-    canActivate: [authGuard],
+    canActivate: [isAuthenticatedGuard],
     children: [
       {
         path: 'inicio',
