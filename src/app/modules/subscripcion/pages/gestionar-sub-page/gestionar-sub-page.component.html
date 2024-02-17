@@ -195,10 +195,19 @@
       </button>
       <button
         type="button"
+        *ngIf="!editMode"
         (click)="saveSub()"
-        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        class="focus:outline-none text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-green-600 hover:bg-green-700 focus:ring-green-800"
       >
         Guardar
+      </button>
+      <button
+        type="button"
+        *ngIf="editMode"
+        (click)="updateSub()"
+        class="focus:outline-none text-white focus:ring-4 ffont-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
+      >
+        Actualizar
       </button>
     </div>
   </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ISub } from 'src/app/core/interfaces';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 
@@ -32,7 +32,8 @@ export class SubsPageComponent implements OnInit {
   constructor(
     private _bottomSheet: MatBottomSheet,
     private subSrv: SubscripcionesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -57,5 +58,9 @@ export class SubsPageComponent implements OnInit {
    */
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
+  }
+
+  onEdit() {
+    this.router.navigate(['/sub/edit', this.id]);
   }
 }

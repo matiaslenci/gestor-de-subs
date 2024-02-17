@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IDefaultSub } from 'src/app/core/interfaces';
+import { IDefaultSub, ISub } from 'src/app/core/interfaces';
 
 @Component({
   templateUrl: './gestionar-sub-page.component.html',
@@ -12,13 +12,11 @@ import { IDefaultSub } from 'src/app/core/interfaces';
 export class GestionarSubPageComponent implements OnInit {
   formSub: FormGroup = new FormGroup({});
 
-  sub: any;
+  sub!: IDefaultSub | ISub;
   estados: any;
 
-  /**
-   * id de la suscripción que se recupera por query params para
-   * setear subscripción
-   */
+  term: string | null = '';
+
   id: string | null = '';
 
   /**
@@ -48,7 +46,14 @@ export class GestionarSubPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
+      // this.term = params.get('term');
       this.id = params.get('id');
+
+      if (this.id) {
+        this.editMode = true;
+      } else {
+        this.editMode = false;
+      }
     });
 
     this.formSub = this.fb.group({
@@ -61,28 +66,28 @@ export class GestionarSubPageComponent implements OnInit {
     });
 
     if (!this.editMode) {
-      this.subSrv.getDefaultSubById(this.id ?? '').subscribe({
-        next: (res: any) => {
+      this.subSrv.getDefaultSubById(this.term ?? '').subscribe({
+        next: (res: IDefaultSub) => {
           this.sub = res;
 
-          this.formSub.patchValue(res);
+          this.formSub.patchValue({ name: res.name });
+        },
+        error: (error: Error) => {
+          console.error(`ERROR: No se pudo obtener la subscripción${error}`);
+        },
+      });
+    } else {
+      this.subSrv.getSubById(this.id ?? '').subscribe({
+        next: (res: ISub) => {
+          this.sub = res;
+
+          this.formSub.patchValue({ name: res.name });
         },
         error: (error: Error) => {
           console.error(`ERROR: No se pudo obtener la subscripción${error}`);
         },
       });
     }
-
-    this.subSrv.getDefaultSubById(this.id ?? '').subscribe({
-      next: (res: IDefaultSub) => {
-        this.sub = res;
-
-        this.formSub.patchValue({ name: res.name });
-      },
-      error: (error: Error) => {
-        console.error(`ERROR: No se pudo obtener la subscripción${error}`);
-      },
-    });
 
     this.subSrv.getEstadosPago().subscribe({
       next: (res: any) => {
@@ -106,7 +111,7 @@ export class GestionarSubPageComponent implements OnInit {
     return this.formSub.get('name')?.value;
   }
 
-  saveSub() {
+  private prepareNewSub() {
     let newSub = {
       ...this.formSub.value,
     };
@@ -117,7 +122,26 @@ export class GestionarSubPageComponent implements OnInit {
 
     if (!newSub.colorId) newSub.colorId = this.sub.colorId;
 
+    return newSub;
+  }
+
+  saveSub() {
+    const newSub = this.prepareNewSub();
+
     this.subSrv.saveSub(newSub).subscribe({
+      next: (res) => {
+        this.router.navigate(['/sub/' + res.sub.id]);
+      },
+      error: (error: Error) => {
+        console.error(`ERROR: ${error}`);
+      },
+    });
+  }
+
+  updateSub() {
+    const newSub = this.prepareNewSub();
+
+    this.subSrv.updateSub(newSub, this.id).subscribe({
       next: (res) => {
         this.router.navigate(['/sub/' + res.sub.id]);
       },

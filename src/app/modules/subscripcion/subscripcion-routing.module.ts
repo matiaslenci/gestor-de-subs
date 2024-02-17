@@ -5,7 +5,10 @@ import { GestionarSubPageComponent } from './pages/gestionar-sub-page/gestionar-
 
 const routes: Routes = [
   { path: ':id', component: SubsPageComponent },
-  { path: 'edit', component: GestionarSubPageComponent },
+  {
+    path: 'edit/:id',
+    component: GestionarSubPageComponent,
+  },
   { path: '**', redirectTo: '' },
 ];
 

@@ -6,7 +6,7 @@ import { GestionarSubPageComponent } from '../subscripcion/pages/gestionar-sub-p
 const routes: Routes = [
   { path: '', component: NewSubPageComponent },
   {
-    path: ':id',
+    path: ':term',
     component: GestionarSubPageComponent,
   },
 ];

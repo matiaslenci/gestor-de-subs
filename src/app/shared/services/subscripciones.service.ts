@@ -89,4 +89,21 @@ export class SubscripcionesService {
         )
       );
   }
+
+  updateSub(sub: any, id: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    return this.http
+      .patch(this.url + 'sub/' + id, sub, { headers })
+      .pipe(
+        catchError((err) =>
+          throwError(
+            () =>
+              `${err.error.statusCode}(${err.error.error}) ${err.error.message}`
+          )
+        )
+      );
+  }
 }
