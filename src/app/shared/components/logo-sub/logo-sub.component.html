@@ -1,17 +1,19 @@
-<div
-  class="flex flex-row items-center justify-center w-16 h-16 rounded-full"
-  [ngClass]="{
-    verde: sub.color.name === 'verde',
-    azul: sub.color.name === 'azul',
-    rojo: sub.color.name === 'rojo',
-    rosa: sub.color.name === 'rosa',
-    amarillo: sub.color.name === 'amarillo',
-    naranja: sub.color.name === 'naranja',
-    gris: sub.color.name === 'gris',
-    morado: sub.color.name === 'morado'
-  }"
->
-  <p class="text-2xl font-semibold">
-    {{ sub.logo }}
-  </p>
-</div>
+<ng-container *ngIf="sub">
+  <div
+    class="flex flex-row items-center justify-center w-16 h-16 rounded-full"
+    [ngClass]="{
+      verde: sub.color.name === 'verde',
+      azul: sub.color.name === 'azul',
+      rojo: sub.color.name === 'rojo',
+      rosa: sub.color.name === 'rosa',
+      amarillo: sub.color.name === 'amarillo',
+      naranja: sub.color.name === 'naranja',
+      gris: sub.color.name === 'gris',
+      morado: sub.color.name === 'morado'
+    }"
+  >
+    <p class="text-2xl font-semibold">
+      {{ sub.logo | uppercase }}
+    </p>
+  </div>
+</ng-container>

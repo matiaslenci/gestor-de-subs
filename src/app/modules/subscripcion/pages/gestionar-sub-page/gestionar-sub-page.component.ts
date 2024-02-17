@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { Subscription } from 'rxjs';
@@ -9,14 +9,8 @@ import { IDefaultSub } from 'src/app/core/interfaces';
   templateUrl: './gestionar-sub-page.component.html',
   styleUrls: ['./gestionar-sub-page.component.scss'],
 })
-export class GestionarSubPageComponent implements OnInit, OnDestroy {
+export class GestionarSubPageComponent implements OnInit {
   formSub: FormGroup = new FormGroup({});
-
-  /**
-   * Subscription de rxjs para guardar subscripciones y desuscribirse en el
-   * NgOnDestroy
-   */
-  private subscriptions!: Subscription[];
 
   sub: any;
   estados: any;
@@ -57,15 +51,15 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
     });
 
     this.formSub = this.fb.group({
-      nombre: ['', Validators.required],
-      estado: '',
-      precio: ['', Validators.required],
-      vencimiento: '',
-      usuario: '',
+      name: ['', Validators.required],
+      //estado: '',
+      price: [null, Validators.required],
+      expiration: '',
+      email: '',
       password: '',
     });
 
-    if ((this.editMode = false)) {
+    if (!this.editMode) {
       this.subSrv.getDefaultSubById(this.id ?? '').subscribe({
         next: (res: any) => {
           this.sub = res;
@@ -81,9 +75,8 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
     this.subSrv.getDefaultSubById(this.id ?? '').subscribe({
       next: (res: IDefaultSub) => {
         this.sub = res;
-        console.log(res);
 
-        this.formSub.patchValue({ nombre: res.name });
+        this.formSub.patchValue({ name: res.name });
       },
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
@@ -108,9 +101,38 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
     this.hidePassword = !this.hidePassword;
   }
 
+  get name() {
+    return this.formSub.get('name')?.value;
+  }
+
+  saveSub() {
+    let newSub = {
+      ...this.formSub.value,
+    };
+
+    if (!newSub.logo) newSub.logo = this.sub.logo.toUpperCase();
+
+    if (!newSub.price) newSub.price = 0;
+
+    this.subSrv.saveSub(newSub).subscribe({
+      error: (error: Error) => {
+        console.error(`ERROR: ${error}`);
+      },
+    });
+  }
+
   /**
    * Permite editar el icono del la sub
    */
-  editIcon() {}
-  ngOnDestroy(): void {}
+  editIcon(value: string) {
+    const palabras = value.split(' ');
+    let iniciales = '';
+
+    for (let i = 0; i < Math.min(2, palabras.length); i++) {
+      iniciales += palabras[i].charAt(0);
+    }
+
+    this.sub.logo = iniciales.toUpperCase();
+    console.log(this.sub.logo);
+  }
 }

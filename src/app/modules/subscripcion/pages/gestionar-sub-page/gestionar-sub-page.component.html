@@ -1,11 +1,11 @@
 <form class="max-w-screen-xl px-6" [formGroup]="formSub">
-  <div class="flex flex-row flex-wrap items-center justify-start gap-5">
+  <div class="flex flex-row items-center justify-start gap-5 flex-nowrap">
     <app-logo-sub [sub]="sub"></app-logo-sub>
 
     <input
       type="text"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-5/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-left"
-      formControlName="nombre"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-left"
+      formControlName="name"
       placeholder="Subscripcion"
     />
   </div>
@@ -56,11 +56,10 @@
             class="inline-flex items-center justify-end text-black text-sm font-medium gap-2 py-0.5 rounded-full dark:text-white"
           >
             <input
-              type="text"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-5/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
-              [value]="'$1000'"
+              type="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-8/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               placeholder="$0000"
-              formControlName="precio"
+              formControlName="price"
             />
           </span>
         </div>
@@ -81,7 +80,7 @@
             <input
               type="date"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
-              formControlName="vencimiento"
+              formControlName="expiration"
             />
           </span>
         </div>
@@ -128,7 +127,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               [value]="'matias@gmail.com'"
               placeholder="Email"
-              formControlName="usuario"
+              formControlName="email"
             />
           </span>
         </div>
@@ -196,7 +195,7 @@
       </button>
       <button
         type="button"
-        [routerLink]="'/sub'"
+        (click)="saveSub()"
         class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
       >
         Guardar

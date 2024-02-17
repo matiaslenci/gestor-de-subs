@@ -1,13 +1,13 @@
 export interface ISub {
-  id: number;
+  id?: number;
   nombre: string;
   precio: number;
   logo: string;
   color: Color;
-  vencimiento: string;
+  vencimiento?: string;
   // estado: string;
-  usuario: string;
-  password: string;
+  usuario?: string;
+  password?: string;
 }
 
 interface Color {

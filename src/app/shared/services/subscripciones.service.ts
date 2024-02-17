@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, of, pipe, throwError } from 'rxjs';
 import { IDefaultSub, ISub } from 'src/app/core/interfaces';
+import { StorageService } from 'src/app/core/services/storage.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,6 +10,16 @@ import { environment } from 'src/environments/environment';
 })
 export class SubscripcionesService {
   url: string = environment.api;
+
+  subCustom: ISub = {
+    nombre: '',
+    precio: 0,
+    logo: 'C',
+    color: { id: 8, name: 'naranja' },
+    vencimiento: '',
+    usuario: '',
+    password: '',
+  };
 
   defaultSubs: IDefaultSub[] = [];
 
@@ -49,7 +60,7 @@ export class SubscripcionesService {
 
   estados: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storageSrv: StorageService) {}
 
   getDefaultSub(): void {
     this.http
@@ -64,10 +75,13 @@ export class SubscripcionesService {
       });
   }
 
-  getDefaultSubById(id: string): Observable<any> {
-    console.log(id);
+  getDefaultSubById(term: string): Observable<any> {
+    if (term === 'custom') {
+      // Retorna un observable con un objeto
+      return of(this.subCustom);
+    }
 
-    return this.http.get(this.url + 'default-sub' + '/' + id);
+    return this.http.get(this.url + 'default-sub' + '/' + term);
   }
 
   getSubById(id: number): Observable<any> {
@@ -77,5 +91,22 @@ export class SubscripcionesService {
   getEstadosPago(): Observable<any> {
     this.estados = ['pendiente', 'pagado', 'vencido'];
     return of(this.estados);
+  }
+
+  saveSub(sub: any): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    return this.http
+      .post(this.url + 'sub', sub, { headers })
+      .pipe(
+        catchError((err) =>
+          throwError(
+            () =>
+              `${err.error.statusCode}(${err.error.error}) ${err.error.message}`
+          )
+        )
+      );
   }
 }
