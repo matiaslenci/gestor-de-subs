@@ -3,8 +3,8 @@
   <h1 class="text-6xl font-extrabold dark:text-white">
     ${{
       showMensual
-        ? (precioMensual | number : "1.0-0" : "es-ES")
-        : (precioAnual | number : "1.0-0" : "es-ES")
+        ? (monthlyPrice() | number : "1.0-0" : "es-ES")
+        : (yearlyPrice() | number : "1.0-0" : "es-ES")
     }}
   </h1>
   <div

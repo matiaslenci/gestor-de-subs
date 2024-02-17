@@ -1,4 +1,4 @@
-<li *ngFor="let sub of subsSrv.subscripciones" class="cursor-pointer">
+<li *ngFor="let sub of subs()" class="cursor-pointer">
   <div
     [routerLink]="'/sub'"
     class="flex flex-row max-w-sm px-6 py-5 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
@@ -13,10 +13,10 @@
           <h5
             class="text-xl font-medium tracking-tight text-gray-900 dark:text-white"
           >
-            {{ sub.nombre }}
+            {{ sub.name }}
           </h5>
           <p class="font-medium text-gray-700 dark:text-white">
-            ${{ sub.precio }}
+            ${{ sub.price }}
             <span class="font-normal text-gray-700 dark:text-gray-400"
               >/mes</span
             >

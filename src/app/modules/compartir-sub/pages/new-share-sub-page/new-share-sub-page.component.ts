@@ -12,7 +12,7 @@ export class NewShareSubPageComponent implements OnInit {
   sub: any;
   constructor(private subSrv: SubscripcionesService) {}
   ngOnInit(): void {
-    this.subSrv.getSubById(0).subscribe({
+    this.subSrv.getSubById('').subscribe({
       next: (res: any) => {
         this.sub = res;
       },

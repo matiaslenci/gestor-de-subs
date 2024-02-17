@@ -31,7 +31,7 @@ export class SubsPageComponent implements OnInit {
     private subSrv: SubscripcionesService
   ) {}
   ngOnInit(): void {
-    this.subSrv.getSubById(0).subscribe({
+    this.subSrv.getSubById('0').subscribe({
       next: (res: any) => {
         this.sub = res;
       },

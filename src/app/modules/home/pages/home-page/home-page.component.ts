@@ -1,4 +1,5 @@
 import { Component, OnInit, computed } from '@angular/core';
+import { ISub } from 'src/app/core/interfaces';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 
@@ -7,23 +8,31 @@ import { SubscripcionesService } from 'src/app/shared/services/subscripciones.se
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
-  precioMensual: number = 0;
-
-  precioAnual: number = 0;
-
   showMensual: boolean = true;
 
   user = computed(() => this.authSrv.currentUser());
+
+  subs = computed(() => this.subSrv.subs());
+
+  monthlyPrice = computed<number>(() => {
+    let precioMensual = 0;
+
+    for (let sub of this.subSrv.subs()) {
+      precioMensual = precioMensual + sub.price;
+    }
+
+    return precioMensual;
+  });
+
+  yearlyPrice = computed(() => {
+    return this.monthlyPrice() * 12;
+  });
   constructor(
     private subSrv: SubscripcionesService,
     private authSrv: AuthService
   ) {}
   ngOnInit(): void {
-    for (let i = 0; i < this.subSrv.subscripciones.length; i++) {
-      this.precioMensual =
-        this.precioMensual + this.subSrv.subscripciones[i].precio;
-    }
-    this.precioAnual = this.precioMensual * 12;
+    this.subSrv.getAllSubs();
   }
 
   tooglePrecioMensual(): void {
