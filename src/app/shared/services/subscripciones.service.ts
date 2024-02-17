@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 export class SubscripcionesService {
   url: string = environment.api;
 
+  subId: string | null = '';
+
   subCustom: ISub = {
     name: '',
     price: 0,
@@ -97,6 +99,23 @@ export class SubscripcionesService {
 
     return this.http
       .patch(this.url + 'sub/' + id, sub, { headers })
+      .pipe(
+        catchError((err) =>
+          throwError(
+            () =>
+              `${err.error.statusCode}(${err.error.error}) ${err.error.message}`
+          )
+        )
+      );
+  }
+
+  deleteSub(id: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    return this.http
+      .delete(this.url + 'sub/' + id, { headers })
       .pipe(
         catchError((err) =>
           throwError(

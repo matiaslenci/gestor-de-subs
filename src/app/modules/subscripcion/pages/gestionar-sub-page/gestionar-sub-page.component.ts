@@ -46,7 +46,7 @@ export class GestionarSubPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      // this.term = params.get('term');
+      this.term = params.get('term');
       this.id = params.get('id');
 
       if (this.id) {
@@ -92,7 +92,6 @@ export class GestionarSubPageComponent implements OnInit {
     this.subSrv.getEstadosPago().subscribe({
       next: (res: any) => {
         this.estados = res;
-
       },
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);

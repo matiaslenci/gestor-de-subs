@@ -181,8 +181,8 @@
         </div>
       </li>
       <!-- Eliminar Subscripcion -->
-      <li class="py-3 cursor-pointer sm:py-4" *ngIf="editMode">
-        <app-boton-eliminar-sub></app-boton-eliminar-sub>
+      <li class="py-3 sm:py-4" *ngIf="editMode">
+        <app-boton-eliminar-sub [id]="id"></app-boton-eliminar-sub>
       </li>
     </ul>
     <div class="flex flex-row justify-between mt-6 gap-7">
