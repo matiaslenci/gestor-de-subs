@@ -177,7 +177,7 @@
             {{ sub.email }}
           </span>
           <ng-template #notEmail>
-            <app-add-info-btn [id]="id" />
+            <app-add-info-btn (click)="onEdit()" />
           </ng-template>
         </div>
       </li>
@@ -211,7 +211,7 @@
             </div>
           </div>
           <ng-template #notPassword>
-            <app-add-info-btn [id]="id" />
+            <app-add-info-btn (click)="onEdit()" />
           </ng-template>
         </div>
       </li>

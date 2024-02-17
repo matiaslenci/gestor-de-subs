@@ -38,6 +38,8 @@ export class GestionarSubPageComponent implements OnInit {
    */
   editMode = false;
 
+  today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+
   constructor(
     public subSrv: SubscripcionesService,
     private fb: FormBuilder,
