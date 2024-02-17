@@ -61,6 +61,7 @@ export class AuthService {
   public register(data: IRegister) {
     return this.http.post<IRegisterResponse>(`${this.url}register`, data).pipe(
       tap((res) => {
+        this.logout();
         this.saveCredentials(res);
       }),
       catchError((err) => throwError(() => err.error.message))
@@ -68,6 +69,7 @@ export class AuthService {
   }
 
   public login(data: any) {
+    this.storageSrv.removeToken();
     return this.http.post<ILoginResponse>(`${this.url}login`, data).pipe(
       tap((res) => {
         this.saveCredentials(res);

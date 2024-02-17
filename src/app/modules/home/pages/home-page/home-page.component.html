@@ -48,7 +48,16 @@
     </select>
   </div>
   <!-- CARDS -->
-  <ul class="w-12/12">
+  <ul class="w-10/12" *ngIf="subs().length > 0">
     <app-card></app-card>
   </ul>
+  <div *ngIf="subs().length === 0" class="w-10/12">
+    <div
+      class="max-w-sm p-4 border rounded-lg shadow bg-gray-800 border-gray-700"
+    >
+      <h5 class="text-lg font-medium text-center tracking-tight text-white">
+        Aún no agregaste una subscripción
+      </h5>
+    </div>
+  </div>
 </div>

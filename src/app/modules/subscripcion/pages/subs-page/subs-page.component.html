@@ -5,7 +5,7 @@
     <h5
       class="mb-2 text-3xl font-medium tracking-tight text-gray-900 dark:text-white"
     >
-      {{ sub.name }}
+      {{ sub.name | titlecase }}
     </h5>
   </div>
 
@@ -135,7 +135,7 @@
             *ngIf="sub.expiration; else notExpiration"
             class="inline-flex items-center text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full text-white"
           >
-            {{ sub.expiration }}
+            {{ sub.expiration | date : "dd-MM-yyyy" }}
           </span>
           <ng-template #notExpiration>
             <app-add-info-btn (click)="onEdit()" />

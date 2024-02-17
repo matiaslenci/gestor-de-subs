@@ -125,9 +125,6 @@ export class GestionarSubPageComponent implements OnInit {
 
     if (!newSub.colorId) newSub.colorId = this.sub.colorId;
 
-    if (newSub.expiration)
-      newSub.expiration = formatDate(newSub.expiration, 'dd-MM-yyyy', 'en-US');
-
     return newSub;
   }
 

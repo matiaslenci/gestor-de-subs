@@ -28,5 +28,6 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authSrv.logout();
+    window.location.reload();
   }
 }
