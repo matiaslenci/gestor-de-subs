@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IDefaultSub } from 'src/app/core/interfaces';
 
 @Component({
@@ -42,7 +42,8 @@ export class GestionarSubPageComponent implements OnInit {
   constructor(
     public subSrv: SubscripcionesService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -114,7 +115,12 @@ export class GestionarSubPageComponent implements OnInit {
 
     if (!newSub.price) newSub.price = 0;
 
+    if (!newSub.colorId) newSub.colorId = this.sub.colorId;
+
     this.subSrv.saveSub(newSub).subscribe({
+      next: (res) => {
+        this.router.navigate(['/sub/' + res.sub.id]);
+      },
       error: (error: Error) => {
         console.error(`ERROR: ${error}`);
       },
