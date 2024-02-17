@@ -81,7 +81,7 @@ export class GestionarSubPageComponent implements OnInit {
         next: (res: ISub) => {
           this.sub = res;
 
-          this.formSub.patchValue({ name: res.name });
+          this.formSub.patchValue({ ...res });
         },
         error: (error: Error) => {
           console.error(`ERROR: No se pudo obtener la subscripción${error}`);
@@ -92,6 +92,7 @@ export class GestionarSubPageComponent implements OnInit {
     this.subSrv.getEstadosPago().subscribe({
       next: (res: any) => {
         this.estados = res;
+
       },
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
@@ -143,7 +144,7 @@ export class GestionarSubPageComponent implements OnInit {
 
     this.subSrv.updateSub(newSub, this.id).subscribe({
       next: (res) => {
-        this.router.navigate(['/sub/' + res.sub.id]);
+        this.router.navigate(['/sub/' + this.id]);
       },
       error: (error: Error) => {
         console.error(`ERROR: ${error}`);

@@ -14,4 +14,8 @@ export class StorageService {
   set token(value: string) {
     localStorage.setItem(environment.pk + 'token', value);
   }
+
+  removeToken() {
+    localStorage.removeItem(environment.pk + 'token');
+  }
 }

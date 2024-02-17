@@ -78,7 +78,7 @@ export class AuthService {
   public logout() {
     this._authStatus.set(AuthStatus.notAuthenticated);
     this._currentUser.set(null);
-    this.storageSrv.token = '';
+    this.storageSrv.removeToken();
   }
 
   private saveCredentials(res: IResponse) {
