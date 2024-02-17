@@ -4,7 +4,7 @@ import { SubsPageComponent } from './pages/subs-page/subs-page.component';
 import { GestionarSubPageComponent } from './pages/gestionar-sub-page/gestionar-sub-page.component';
 
 const routes: Routes = [
-  { path: '', component: SubsPageComponent },
+  { path: ':id', component: SubsPageComponent },
   { path: 'edit', component: GestionarSubPageComponent },
   { path: '**', redirectTo: '' },
 ];

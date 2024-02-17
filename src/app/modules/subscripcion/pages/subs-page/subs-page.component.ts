@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ActivatedRoute } from '@angular/router';
+import { ISub } from 'src/app/core/interfaces';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 
 @Component({
@@ -7,6 +9,7 @@ import { SubscripcionesService } from 'src/app/shared/services/subscripciones.se
   styleUrls: ['./subs-page.component.scss'],
 })
 export class SubsPageComponent implements OnInit {
+  id: string | null = '';
   /**
    * Bool que inidica si ya agrego amigos a la subscripcion
    * Modifica el boton de compartir subscripción por otro si es true
@@ -19,21 +22,27 @@ export class SubsPageComponent implements OnInit {
   hidePassword: boolean = true;
 
   //TODO: Traer desde rest
-  password = 'contraseña123';
+  password = '';
 
   /**
    * Subscripcion desde el rest
    */
-  sub: any;
+  sub!: ISub;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
-    private subSrv: SubscripcionesService
+    private subSrv: SubscripcionesService,
+    private route: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    this.subSrv.getSubById('0').subscribe({
+    this.route.paramMap.subscribe((params) => {
+      this.id = params.get('id');
+    });
+
+    this.subSrv.getSubById(this.id ?? '').subscribe({
       next: (res: any) => {
         this.sub = res;
+        this.password = res.password;
       },
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
