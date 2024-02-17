@@ -4,6 +4,7 @@ import { SubscripcionesService } from 'src/app/shared/services/subscripciones.se
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDefaultSub, ISub } from 'src/app/core/interfaces';
+import { formatDate } from '@angular/common';
 
 @Component({
   templateUrl: './gestionar-sub-page.component.html',
@@ -121,6 +122,9 @@ export class GestionarSubPageComponent implements OnInit {
     if (!newSub.price) newSub.price = 0;
 
     if (!newSub.colorId) newSub.colorId = this.sub.colorId;
+
+    if (newSub.expiration)
+      newSub.expiration = formatDate(newSub.expiration, 'dd-MM-yyyy', 'en-US');
 
     return newSub;
   }
