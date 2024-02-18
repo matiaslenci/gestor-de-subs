@@ -173,4 +173,9 @@ export class GestionarSubPageComponent implements OnInit {
 
     this.sub.logo = iniciales.toUpperCase();
   }
+
+  editColor(id: number, color: string) {
+    this.sub.colorId = id;
+    this.sub.color.name = color;
+  }
 }

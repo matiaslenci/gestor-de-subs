@@ -11,11 +11,46 @@
   </div>
 
   <!-- DATA -->
-  <div class="mt-8">
-    <ul
-      role="list"
-      class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
-    >
+  <div class="mt-5">
+    <ul role="list" class="max-w-sm divide-y divide-gray-700">
+      <li class="py-3 sm:py-4">
+        <div
+          class="flex items-center justify-around h-12 rounded [&>span]:relative [&>span]:rounded-full [&>span]:w-5 [&>span]:h-5 [&>span]:overflow-hidden [&>span]:border"
+        >
+          <span
+            (click)="editColor(1, 'rojo')"
+            class="border-red-800 rojo"
+          ></span>
+          <span
+            (click)="editColor(2, 'azul')"
+            class="border-blue-800 azul"
+          ></span>
+          <span
+            (click)="editColor(3, 'rosa')"
+            class="border-pink-800 rosa"
+          ></span>
+          <span
+            (click)="editColor(4, 'amarillo')"
+            class="border-yellow-800 amarillo"
+          ></span>
+          <span
+            (click)="editColor(5, 'gris')"
+            class="border-gray-800 gris"
+          ></span>
+          <span
+            (click)="editColor(6, 'morado')"
+            class="border-indigo-800 morado"
+          ></span>
+          <span
+            (click)="editColor(7, 'verde')"
+            class="border-green-800 verde"
+          ></span>
+          <span
+            (click)="editColor(8, 'naranja')"
+            class="border-orange-800 naranja"
+          ></span>
+        </div>
+      </li>
       <!-- ESTADO DE PAGO -->
       <!--
       <li class="py-3 sm:py-4">
