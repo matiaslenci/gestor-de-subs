@@ -100,6 +100,12 @@ export class GestionarSubPageComponent implements OnInit {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
       },
     });
+
+    this.formSub.valueChanges.subscribe((value) => {
+      if (value.name) {
+        this.editIcon(value.name);
+      }
+    });
   }
   /**
    * Esta función se llama cuando se hace clic en el SVG.
