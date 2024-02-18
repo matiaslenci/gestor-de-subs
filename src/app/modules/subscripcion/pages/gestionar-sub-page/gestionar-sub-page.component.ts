@@ -125,7 +125,7 @@ export class GestionarSubPageComponent implements OnInit {
       ...this.formSub.value,
     };
 
-    if (!newSub.logo) newSub.logo = this.sub.logo.toUpperCase();
+    if (!newSub.logo) newSub.logo = this.sub.logo;
 
     if (!newSub.price) newSub.price = 0;
 
@@ -172,6 +172,5 @@ export class GestionarSubPageComponent implements OnInit {
     }
 
     this.sub.logo = iniciales.toUpperCase();
-    console.log(this.sub.logo);
   }
 }

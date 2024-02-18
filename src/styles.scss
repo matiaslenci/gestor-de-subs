@@ -22,6 +22,12 @@ button{
   src: url('../src/assets/fonts/Gotham\ Book\ Font.otf');
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .app-container {
   overflow-x: hidden;
   display: grid;
