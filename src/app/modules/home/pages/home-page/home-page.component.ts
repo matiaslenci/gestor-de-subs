@@ -2,6 +2,8 @@ import { Component, OnInit, computed } from '@angular/core';
 import { ISub } from 'src/app/core/interfaces';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
+import { OrderListService } from '../../services/order-list.service';
+import { Order } from 'src/app/core/interfaces';
 
 @Component({
   templateUrl: './home-page.component.html',
@@ -27,9 +29,17 @@ export class HomePageComponent implements OnInit {
   yearlyPrice = computed(() => {
     return this.monthlyPrice() * 12;
   });
+
+  subsCount = computed(() => {
+    return this.subs().length;
+  });
+
+  order: Order = Order.higher;
+
   constructor(
     private subSrv: SubscripcionesService,
-    private authSrv: AuthService
+    private authSrv: AuthService,
+    private orderSrv: OrderListService
   ) {}
   ngOnInit(): void {
     this.subSrv.getAllSubs();

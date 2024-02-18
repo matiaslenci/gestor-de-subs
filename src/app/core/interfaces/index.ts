@@ -7,3 +7,4 @@ export * from '../interfaces/user.interface';
 export * from '../interfaces/register-response.interface';
 export * from '../interfaces/login-response.interface';
 export * from '../interfaces/check-status.inteface';
+export * from '../interfaces/order.enum';

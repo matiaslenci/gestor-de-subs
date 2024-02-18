@@ -37,10 +37,11 @@
 
     <select
       id="countries"
+      [(ngModel)]="order"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-6/12 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
     >
-      <option selected>Mayor Precio</option>
-      <option value="US">Menor Precio</option>
+      <option selected value="higher">Mayor Precio</option>
+      <option value="lower">Menor Precio</option>
       <!--
       <option value="CA">Pendientes de pago</option>
       <option value="FR">Compartidas</option>
@@ -48,14 +49,14 @@
     </select>
   </div>
   <!-- CARDS -->
-  <ul class="w-10/12" *ngIf="subs().length > 0">
-    <app-card></app-card>
+  <ul class="w-10/12" *ngIf="subsCount() > 0">
+    <app-card [order]="order"></app-card>
   </ul>
-  <div *ngIf="subs().length === 0" class="w-10/12">
+  <div *ngIf="subsCount() === 0" class="w-10/12">
     <div
-      class="max-w-sm p-4 border rounded-lg shadow bg-gray-800 border-gray-700"
+      class="max-w-sm p-4 bg-gray-800 border border-gray-700 rounded-lg shadow"
     >
-      <h5 class="text-lg font-medium text-center tracking-tight text-white">
+      <h5 class="text-lg font-medium tracking-tight text-center text-white">
         Aún no agregaste una subscripción
       </h5>
     </div>
