@@ -8,9 +8,10 @@ import { GestionarSubPageComponent } from './pages/gestionar-sub-page/gestionar-
 import { BotonEliminarSubComponent } from 'src/app/shared/components/boton-eliminar-sub/boton-eliminar-sub.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoSubComponent } from 'src/app/shared/components/logo-sub/logo-sub.component';
+import { AddInfoBtnComponent } from './components/add-info-btn/add-info-btn.component';
 
 @NgModule({
-  declarations: [SubsPageComponent, GestionarSubPageComponent],
+  declarations: [SubsPageComponent, GestionarSubPageComponent, AddInfoBtnComponent],
   imports: [
     CommonModule,
     SubscripcionRoutingModule,

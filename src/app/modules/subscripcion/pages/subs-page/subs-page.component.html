@@ -1,20 +1,20 @@
-<div class="max-w-screen-xl px-6">
+<div class="max-w-screen-xl px-6" *ngIf="sub">
   <div class="flex flex-row flex-wrap items-center justify-start gap-5">
     <app-logo-sub [sub]="sub"></app-logo-sub>
 
     <h5
       class="mb-2 text-3xl font-medium tracking-tight text-gray-900 dark:text-white"
     >
-      {{ sub.nombre }}
+      {{ sub.name | titlecase }}
     </h5>
   </div>
 
   <!-- BOTONES -->
   <div class="flex flex-col gap-4 mt-6">
     <button
-      [routerLink]="'edit'"
+      (click)="onEdit()"
       type="button"
-      class="w-full py-3 text-base font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+      class="w-full py-3 text-base font-medium text-white bg-gray-800 border-gray-700 rounded-lg focus:outline-none focus:ring-4 hover:bg-gray-700 focus:ring-gray-700"
     >
       Editar subscripción
     </button>
@@ -23,7 +23,7 @@
       <button
         [routerLink]="'/share'"
         type="button"
-        class="flex flex-row items-center justify-center w-full gap-3 px-5 py-3 text-base font-medium text-white bg-blue-800 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-800 dark:hover:bg-blue-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        class="flex flex-row items-center justify-center w-full gap-3 px-5 py-3 text-base font-medium text-white bg-blue-800 border-gray-700 rounded-lg focus:outline-none focus:ring-4 hover:bg-blue-700 focus:ring-gray-700"
       >
         Compartir subscripción
         <svg height="26" viewBox="0 -960 960 960" width="26">
@@ -39,7 +39,7 @@
       <button
         [routerLink]="'/share/list'"
         type="button"
-        class="flex flex-row items-center justify-center w-10/12 gap-3 px-5 py-3 mb-2 mr-2 text-base font-medium text-center text-blue-700 border border-blue-700 rounded-lg hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+        class="flex flex-row items-center justify-center w-10/12 gap-3 px-5 py-3 mb-2 mr-2 text-base font-medium text-center text-blue-500 border border-blue-500 rounded-lg focus:ring-4 focus:outline-none hover:text-white hover:bg-blue-500 focus:ring-blue-800"
       >
         Gestionar amigos
         <svg height="26" viewBox="0 -960 960 960" width="26">
@@ -53,10 +53,7 @@
   </div>
   <!-- DATA -->
   <div class="mt-8">
-    <ul
-      role="list"
-      class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
-    >
+    <ul role="list" class="max-w-sm divide-y divide-gray-700">
       <!-- ESTADO DE PAGO --><!--
       <li class="py-3 sm:py-4">
         <div class="flex items-center">
@@ -116,17 +113,13 @@
       <li class="py-3 sm:py-4">
         <div class="flex items-center">
           <div class="flex-1 min-w-0">
-            <p
-              class="text-base font-medium text-gray-900 truncate dark:text-white"
-            >
-              Precio
-            </p>
+            <p class="text-base font-medium text-white truncate">Precio</p>
           </div>
           <span
             data-tooltip-target="info-impuestos"
-            class="inline-flex items-center text-black text-sm font-medium gap-2 px-2.5 py-0.5 rounded-full dark:text-white"
+            class="inline-flex items-center text-sm font-medium gap-2 px-2.5 py-0.5 rounded-full text-white"
           >
-            $1.000
+            ${{ sub.price }}
           </span>
         </div>
       </li>
@@ -134,17 +127,19 @@
       <li class="py-3 sm:py-4">
         <div class="flex items-center">
           <div class="flex-1 min-w-0">
-            <p
-              class="text-base font-medium text-gray-900 truncate dark:text-white"
-            >
+            <p class="text-base font-medium text-white truncate">
               Próximo Vencimiento
             </p>
           </div>
           <span
-            class="inline-flex items-center text-black text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:text-white"
+            *ngIf="sub.expiration; else notExpiration"
+            class="inline-flex items-center text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full text-white"
           >
-            17 de julio
+            {{ sub.expiration | date : "dd-MM-yyyy" }}
           </span>
+          <ng-template #notExpiration>
+            <app-add-info-btn (click)="onEdit()" />
+          </ng-template>
         </div>
       </li>
       <!-- PLAN -->
@@ -174,26 +169,28 @@
               Usuario
             </p>
           </div>
+
           <span
+            *ngIf="sub.email; else notEmail"
             class="inline-flex items-center text-black text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:text-white"
           >
-            matias&#64;gmail.com
+            {{ sub.email }}
           </span>
+          <ng-template #notEmail>
+            <app-add-info-btn (click)="onEdit()" />
+          </ng-template>
         </div>
       </li>
       <!-- CONTRASEÑA -->
       <li class="py-3 sm:py-4">
         <div class="flex items-center">
           <div class="flex-1 min-w-0">
-            <p
-              class="text-base font-medium text-gray-900 truncate dark:text-white"
-            >
-              Contraseña
-            </p>
+            <p class="text-base font-medium text-white truncate">Contraseña</p>
           </div>
           <div
+            *ngIf="sub.password; else notPassword"
             (click)="togglePasswordVisibility()"
-            class="inline-flex items-center gap-3 cursor-pointer text-black text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:text-white"
+            class="inline-flex items-center gap-3 cursor-pointer text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full text-white"
           >
             {{ hidePassword ? "• • • • • • • •" : password }}
             <div *ngIf="hidePassword">
@@ -213,11 +210,14 @@
               </svg>
             </div>
           </div>
+          <ng-template #notPassword>
+            <app-add-info-btn (click)="onEdit()" />
+          </ng-template>
         </div>
       </li>
       <!-- Eliminar Subscripcion -->
-      <li class="py-3 cursor-pointer sm:py-4">
-        <app-boton-eliminar-sub></app-boton-eliminar-sub>
+      <li class="py-3 sm:py-4">
+        <app-boton-eliminar-sub [id]="id"></app-boton-eliminar-sub>
       </li>
     </ul>
   </div>

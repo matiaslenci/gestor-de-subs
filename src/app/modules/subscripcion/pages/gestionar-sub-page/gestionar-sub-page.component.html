@@ -1,21 +1,56 @@
 <form class="max-w-screen-xl px-6" [formGroup]="formSub">
-  <div class="flex flex-row flex-wrap items-center justify-start gap-5">
+  <div class="flex flex-row items-center justify-start gap-5 flex-nowrap">
     <app-logo-sub [sub]="sub"></app-logo-sub>
 
     <input
       type="text"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-5/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-left"
-      formControlName="nombre"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-left"
+      formControlName="name"
       placeholder="Subscripcion"
     />
   </div>
 
   <!-- DATA -->
-  <div class="mt-8">
-    <ul
-      role="list"
-      class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
-    >
+  <div class="mt-5">
+    <ul role="list" class="max-w-sm divide-y divide-gray-700">
+      <li class="py-3 sm:py-4">
+        <div
+          class="flex items-center justify-around h-12 rounded [&>span]:relative [&>span]:rounded-full [&>span]:w-5 [&>span]:h-5 [&>span]:overflow-hidden [&>span]:border"
+        >
+          <span
+            (click)="editColor(1, 'rojo')"
+            class="border-red-800 rojo"
+          ></span>
+          <span
+            (click)="editColor(2, 'azul')"
+            class="border-blue-800 azul"
+          ></span>
+          <span
+            (click)="editColor(3, 'rosa')"
+            class="border-pink-800 rosa"
+          ></span>
+          <span
+            (click)="editColor(4, 'amarillo')"
+            class="border-yellow-800 amarillo"
+          ></span>
+          <span
+            (click)="editColor(5, 'gris')"
+            class="border-gray-800 gris"
+          ></span>
+          <span
+            (click)="editColor(6, 'morado')"
+            class="border-indigo-800 morado"
+          ></span>
+          <span
+            (click)="editColor(7, 'verde')"
+            class="border-green-800 verde"
+          ></span>
+          <span
+            (click)="editColor(8, 'naranja')"
+            class="border-orange-800 naranja"
+          ></span>
+        </div>
+      </li>
       <!-- ESTADO DE PAGO -->
       <!--
       <li class="py-3 sm:py-4">
@@ -56,11 +91,10 @@
             class="inline-flex items-center justify-end text-black text-sm font-medium gap-2 py-0.5 rounded-full dark:text-white"
           >
             <input
-              type="text"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-5/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
-              [value]="'$1000'"
+              type="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-8/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               placeholder="$0000"
-              formControlName="precio"
+              formControlName="price"
             />
           </span>
         </div>
@@ -80,8 +114,9 @@
           >
             <input
               type="date"
+              [min]="today"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
-              formControlName="vencimiento"
+              formControlName="expiration"
             />
           </span>
         </div>
@@ -128,7 +163,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               [value]="'matias@gmail.com'"
               placeholder="Email"
-              formControlName="usuario"
+              formControlName="email"
             />
           </span>
         </div>
@@ -182,8 +217,8 @@
         </div>
       </li>
       <!-- Eliminar Subscripcion -->
-      <li class="py-3 cursor-pointer sm:py-4" *ngIf="editMode">
-        <app-boton-eliminar-sub></app-boton-eliminar-sub>
+      <li class="py-3 sm:py-4" *ngIf="editMode">
+        <app-boton-eliminar-sub [id]="id"></app-boton-eliminar-sub>
       </li>
     </ul>
     <div class="flex flex-row justify-between mt-6 gap-7">
@@ -196,10 +231,19 @@
       </button>
       <button
         type="button"
-        [routerLink]="'/sub'"
-        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        *ngIf="!editMode"
+        (click)="saveSub()"
+        class="focus:outline-none text-white focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-green-600 hover:bg-green-700 focus:ring-green-800"
       >
         Guardar
+      </button>
+      <button
+        type="button"
+        *ngIf="editMode"
+        (click)="updateSub()"
+        class="focus:outline-none text-white focus:ring-4 ffont-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
+      >
+        Actualizar
       </button>
     </div>
   </div>

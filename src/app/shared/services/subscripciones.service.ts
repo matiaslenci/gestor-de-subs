@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, computed, signal } from '@angular/core';
+import { Observable, catchError, of, pipe, throwError } from 'rxjs';
 import { IDefaultSub, ISub } from 'src/app/core/interfaces';
+import { StorageService } from 'src/app/core/services/storage.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,46 +11,26 @@ import { environment } from 'src/environments/environment';
 export class SubscripcionesService {
   url: string = environment.api;
 
+  subId: string | null = '';
+
+  subCustom: ISub = {
+    name: '',
+    price: 0,
+    logo: 'C',
+    colorId: 8,
+    color: { id: 8, name: 'naranja' },
+    expiration: '',
+    email: '',
+    password: '',
+  };
+
+  subs = signal<ISub[]>([]);
+
   defaultSubs: IDefaultSub[] = [];
-
-  subscripciones: ISub[] = [
-    {
-      id: 0,
-      nombre: 'Netflix',
-      precio: 1000,
-      logo: 'N',
-      color: { id: 1, name: 'rojo' },
-
-      vencimiento: '2023-07-05',
-      usuario: 'matias@gmail',
-      password: 'password',
-    },
-    {
-      id: 1,
-      nombre: 'Spotify',
-      precio: 1000,
-      logo: 'S',
-      color: { id: 3, name: 'verde' },
-
-      vencimiento: '2023-07-05',
-      usuario: 'matias@gmail',
-      password: 'password',
-    },
-    {
-      id: 2,
-      nombre: 'Disney+',
-      precio: 1000,
-      logo: 'D+',
-      color: { id: 2, name: 'azul' },
-      vencimiento: '2023-07-05',
-      usuario: 'matias@gmail',
-      password: 'password',
-    },
-  ];
 
   estados: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storageSrv: StorageService) {}
 
   getDefaultSub(): void {
     this.http
@@ -64,18 +45,84 @@ export class SubscripcionesService {
       });
   }
 
-  getDefaultSubById(id: string): Observable<any> {
-    console.log(id);
+  getDefaultSubById(term: string): Observable<any> {
+    if (term === 'custom') {
+      // Retorna un observable con un objeto
+      return of(this.subCustom);
+    }
 
-    return this.http.get(this.url + 'default-sub' + '/' + id);
+    return this.http.get(this.url + 'default-sub' + '/' + term);
   }
 
-  getSubById(id: number): Observable<any> {
-    return of(this.subscripciones[id]);
+  getAllSubs(): void {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    this.http.get<ISub[]>(this.url + 'sub', { headers }).subscribe({
+      next: (res) => {
+        this.subs.set(res);
+      },
+    });
+  }
+
+  getSubById(id: string): Observable<any> {
+    return this.http.get<ISub>(this.url + 'sub/' + id);
   }
 
   getEstadosPago(): Observable<any> {
     this.estados = ['pendiente', 'pagado', 'vencido'];
     return of(this.estados);
+  }
+
+  saveSub(sub: any): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    return this.http
+      .post(this.url + 'sub', sub, { headers })
+      .pipe(
+        catchError((err) =>
+          throwError(
+            () =>
+              `${err.error.statusCode}(${err.error.error}) ${err.error.message}`
+          )
+        )
+      );
+  }
+
+  updateSub(sub: any, id: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    return this.http
+      .patch(this.url + 'sub/' + id, sub, { headers })
+      .pipe(
+        catchError((err) =>
+          throwError(
+            () =>
+              `${err.error.statusCode}(${err.error.error}) ${err.error.message}`
+          )
+        )
+      );
+  }
+
+  deleteSub(id: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    return this.http
+      .delete(this.url + 'sub/' + id, { headers })
+      .pipe(
+        catchError((err) =>
+          throwError(
+            () =>
+              `${err.error.statusCode}(${err.error.error}) ${err.error.message}`
+          )
+        )
+      );
   }
 }

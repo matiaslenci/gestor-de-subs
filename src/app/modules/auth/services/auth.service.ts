@@ -10,6 +10,7 @@ import {
   IRegisterResponse,
   IUser,
 } from 'src/app/core/interfaces';
+import { StorageService } from 'src/app/core/services/storage.service';
 import { environment } from 'src/environments/environment';
 
 export type IResponse = ILoginResponse | IRegisterResponse;
@@ -26,27 +27,19 @@ export class AuthService {
   public currentUser = computed(() => this._currentUser());
   public authStatus = computed(() => this._authStatus());
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private storageSrv: StorageService) {
     this.checkAuthStatus().subscribe();
   }
 
-  get token() {
-    return localStorage.getItem(environment.pk + 'token') || '';
-  }
-
-  set token(value: string) {
-    localStorage.setItem(environment.pk + 'token', value);
-  }
-
   public checkAuthStatus(): Observable<boolean> {
-    if (!this.token) {
+    if (!this.storageSrv.token) {
       this.logout();
 
       return of(false);
     }
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${this.storageSrv.token}`,
     });
 
     return this.http
@@ -68,6 +61,7 @@ export class AuthService {
   public register(data: IRegister) {
     return this.http.post<IRegisterResponse>(`${this.url}register`, data).pipe(
       tap((res) => {
+        this.logout();
         this.saveCredentials(res);
       }),
       catchError((err) => throwError(() => err.error.message))
@@ -75,6 +69,7 @@ export class AuthService {
   }
 
   public login(data: any) {
+    this.storageSrv.removeToken();
     return this.http.post<ILoginResponse>(`${this.url}login`, data).pipe(
       tap((res) => {
         this.saveCredentials(res);
@@ -85,13 +80,13 @@ export class AuthService {
   public logout() {
     this._authStatus.set(AuthStatus.notAuthenticated);
     this._currentUser.set(null);
-    this.token = '';
+    this.storageSrv.removeToken();
   }
 
   private saveCredentials(res: IResponse) {
     const { token, user } = res;
     this._authStatus.set(AuthStatus.authenticated);
     this._currentUser.set(user);
-    this.token = token;
+    this.storageSrv.token = token;
   }
 }
