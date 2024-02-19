@@ -26,7 +26,13 @@ export class CardsComponent implements OnChanges {
   constructor(
     public subsSrv: SubscripcionesService,
     public orderSrv: OrderListService
-  ) {}
+  ) {
+    effect(() => {
+      if (this.subsSrv.subs()) {
+        this.setOrdenList();
+      }
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.order = changes['order'].currentValue;
