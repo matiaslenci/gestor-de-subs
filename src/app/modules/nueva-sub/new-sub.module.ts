@@ -5,6 +5,7 @@ import { NewSubRoutingModule } from './new-sub-routing.module';
 import { CardNewSubComponent } from './components/card-new-sub/card-new-sub.component';
 import { BotonAgregarComponent } from 'src/app/shared/components/boton-agregar/boton-agregar.component';
 import { LogoSubComponent } from 'src/app/shared/components/logo-sub/logo-sub.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [NewSubPageComponent, CardNewSubComponent],
@@ -12,6 +13,7 @@ import { LogoSubComponent } from 'src/app/shared/components/logo-sub/logo-sub.co
     CommonModule,
     NewSubRoutingModule,
     BotonAgregarComponent,
+    FormsModule,
     LogoSubComponent,
   ],
   exports: [NewSubPageComponent],

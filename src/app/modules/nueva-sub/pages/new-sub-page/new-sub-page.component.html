@@ -6,10 +6,12 @@
       <form>
         <div class="relative">
           <input
+            [(ngModel)]="search"
+            [ngModelOptions]="{ standalone: true }"
             type="search"
             id="default-search"
             class="block w-full p-4 pl-10 mb-1 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Busca una subscripción"
+            placeholder="Buscar por nombre"
           />
           <button
             type="button"
@@ -29,13 +31,13 @@
         </div>
       </form>
     </li>
-    <li>
+    <li *ngIf="search === ''">
       <app-boton-agregar
         titulo="subscripción Personalizada"
         ruta="/new/custom"
       ></app-boton-agregar>
     </li>
 
-    <app-card-new-sub></app-card-new-sub>
+    <app-card-new-sub [search]="search"></app-card-new-sub>
   </ul>
 </div>
