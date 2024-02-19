@@ -62,7 +62,7 @@ export class GestionarSubPageComponent implements OnInit {
     this.formSub = this.fb.group({
       name: ['', Validators.required],
       //estado: '',
-      price: [null, Validators.required],
+      price: null,
       expiration: '',
       email: '',
       password: '',
@@ -125,11 +125,17 @@ export class GestionarSubPageComponent implements OnInit {
       ...this.formSub.value,
     };
 
+    newSub.name = newSub.name.trim();
+
     if (!newSub.logo) newSub.logo = this.sub.logo;
 
     if (!newSub.price) newSub.price = 0;
 
     if (!newSub.colorId) newSub.colorId = this.sub.colorId;
+
+    if (newSub.email) newSub.email = newSub.email.trim();
+
+    if (newSub.password) newSub.password = newSub.password.trim();
 
     return newSub;
   }
@@ -151,7 +157,7 @@ export class GestionarSubPageComponent implements OnInit {
     const newSub = this.prepareNewSub();
 
     this.subSrv.updateSub(newSub, this.id).subscribe({
-      next: (res) => {
+      next: () => {
         this.router.navigate(['/sub/' + this.id]);
       },
       error: (error: Error) => {
@@ -171,7 +177,7 @@ export class GestionarSubPageComponent implements OnInit {
       iniciales += palabras[i].charAt(0);
     }
 
-    this.sub.logo = iniciales.toUpperCase();
+    this.sub.logo = iniciales.toUpperCase().trim();
   }
 
   editColor(id: number, color: string) {
