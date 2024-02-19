@@ -101,10 +101,10 @@ export class GestionarSubPageComponent implements OnInit {
       },
     });
 
-    this.formSub.valueChanges.subscribe((value) => {
-      if (value.name) {
-        this.editIcon(value.name);
-      }
+    this.formSub.get('name')?.valueChanges.subscribe((value: string) => {
+      console.log(value);
+
+      this.editIcon(value);
     });
   }
   /**
