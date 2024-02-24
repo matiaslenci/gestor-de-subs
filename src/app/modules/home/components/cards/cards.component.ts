@@ -19,7 +19,7 @@ import { OrderListService } from '../../services/order-list.service';
 export class CardsComponent implements OnChanges {
   listSubs: ISub[] = [];
 
-  currentDate = new Date();
+  currentDate!: Date;
 
   @Input({ required: true }) order: Order = Order.higher;
 
@@ -32,6 +32,8 @@ export class CardsComponent implements OnChanges {
         this.setOrdenList();
       }
     });
+
+    this.currentDate = new Date();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,15 +50,39 @@ export class CardsComponent implements OnChanges {
       const difInMiliseconds: number =
         selectDate.getTime() - this.currentDate.getTime();
 
-      const difInDays: number = Math.floor(
+      let difInDays: number = Math.ceil(
         difInMiliseconds / (1000 * 60 * 60 * 24)
       );
 
-      return `Vencimiento en ${difInDays} dias`;
+      difInDays = difInDays + 1;
+
+      /*    if (difInDays > 0) {
+        this.resetMonth(selectDate, sub);
+      }
+ */
+      if (difInDays > 1) {
+        return `Vencimiento en ${difInDays} dias`;
+      } else if (difInDays === 1) {
+        return `Vencimiento en ${difInDays} dia`;
+      } else {
+        return `Vence hoy!`;
+      }
     } else {
       return '';
     }
   }
+
+  /*   resetMonth(selectDate: Date, sub: ISub) {
+    // Sumar un mes a la fecha objetivo
+    selectDate.setMonth(selectDate.getMonth() + 1);
+
+    sub.expiration = selectDate.toISOString();
+
+    if (sub.id) this.subsSrv.updateSub(sub, sub.id);
+
+    // Recalcular los días restantes
+    this.getDateExpiration(sub);
+  } */
 
   setOrdenList(): void {
     if (this.order === Order.higher) {
