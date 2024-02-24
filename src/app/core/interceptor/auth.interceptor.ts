@@ -19,7 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     /*     if (req.url.includes('/check-status')) {
-      console.log('paso');
 
       return next.handle(req);
     }
@@ -31,7 +30,6 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     if (!req.url.includes(environment.api + '/auth')) {
-      console.log(req.url);
 
       const reqClone = req.clone({
         setHeaders: {

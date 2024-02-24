@@ -15,7 +15,7 @@
     <ul role="list" class="max-w-sm divide-y divide-gray-700">
       <li class="py-3 sm:py-4">
         <div
-          class="flex items-center justify-around h-12 rounded [&>span]:relative [&>span]:rounded-full [&>span]:w-5 [&>span]:h-5 [&>span]:overflow-hidden [&>span]:border"
+          class="flex items-center justify-around h-12 rounded [&>span]:relative [&>span]:rounded-full [&>span]:w-5 [&>span]:cursor-pointer [&>span]:h-5 [&>span]:overflow-hidden [&>span]:border"
         >
           <span
             (click)="editColor(1, 'rojo')"
@@ -114,7 +114,6 @@
           >
             <input
               type="date"
-              [min]="today"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-12/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               formControlName="expiration"
             />

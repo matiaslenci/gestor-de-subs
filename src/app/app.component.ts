@@ -26,8 +26,6 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('');
         return;
       case AuthStatus.notAuthenticated:
-        console.log('paso');
-
         // this.router.navigateByUrl('/auth/login');
         return;
     }

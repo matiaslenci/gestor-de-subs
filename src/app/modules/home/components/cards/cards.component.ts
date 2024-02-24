@@ -1,9 +1,6 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
   computed,
   effect,
 } from '@angular/core';
@@ -16,28 +13,19 @@ import { OrderListService } from '../../services/order-list.service';
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss'],
 })
-export class CardsComponent implements OnChanges {
-  listSubs: ISub[] = [];
+export class CardsComponent {
+  subs = computed(() => this.subsSrv.subs());
 
-  currentDate = new Date();
+  listSubs = [...this.subs().sort((a, b) => a.price - b.price)];
 
-  @Input({ required: true }) order: Order = Order.higher;
+  currentDate!: Date;
 
   constructor(
     public subsSrv: SubscripcionesService,
     public orderSrv: OrderListService
   ) {
-    effect(() => {
-      if (this.subsSrv.subs()) {
-        this.setOrdenList();
-      }
-    });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.order = changes['order'].currentValue;
-
-    this.setOrdenList();
+    this.changeOrder();
+    this.currentDate = new Date();
   }
 
   getDateExpiration(sub: ISub): string {
@@ -48,21 +36,67 @@ export class CardsComponent implements OnChanges {
       const difInMiliseconds: number =
         selectDate.getTime() - this.currentDate.getTime();
 
-      const difInDays: number = Math.floor(
+      let difInDays: number = Math.ceil(
         difInMiliseconds / (1000 * 60 * 60 * 24)
       );
 
-      return `Vencimiento en ${difInDays} dias`;
+      if (difInDays < 0) {
+        this.resetMonth(sub);
+      }
+
+      if (difInDays > 1) {
+        return `Vencimiento en ${difInDays} dias`;
+      } else if (difInDays === 1) {
+        return `Vencimiento en ${difInDays} dia`;
+      } else {
+        return `Vence hoy!`;
+      }
     } else {
       return '';
     }
   }
 
-  setOrdenList(): void {
-    if (this.order === Order.higher) {
-      this.listSubs = [...this.orderSrv.sortSubsDescending()];
-    } else if (this.order === Order.lower) {
-      this.listSubs = [...this.orderSrv.sortSubsAscending()];
+  resetMonth(sub: ISub) {
+    let updateSub = {
+      name: sub.name,
+      price: sub.price,
+      expiration: sub.expiration,
+      email: sub.email,
+      logo: sub.logo,
+      colorId: sub.colorId,
+    };
+
+    if (updateSub.expiration) {
+      let selectDate = new Date(updateSub.expiration);
+
+      // Sumar un mes a la fecha objetivo
+      selectDate.setMonth(this.currentDate.getMonth() + 1);
+
+      updateSub.expiration = selectDate.toISOString().split('T')[0];
+      sub.expiration = selectDate.toISOString().split('T')[0];
+
+      if (sub.id)
+        this.subsSrv.updateSub(updateSub, sub.id).subscribe({
+          error: (err) => {
+            console.error(err);
+          },
+        });
+
+      // Recalcular los días restantes
+      this.getDateExpiration(sub);
     }
+  }
+
+  /**
+   * Cambia el orden de la lista de mayor a menor
+   */
+  changeOrder() {
+    effect(() => {
+      if (this.orderSrv.order() === Order.higher) {
+        this.listSubs = [...this.subs().sort((a, b) => b.price - a.price)];
+      } else if (this.orderSrv.order() === Order.lower) {
+        this.listSubs = [...this.subs().sort((a, b) => a.price - b.price)];
+      }
+    });
   }
 }

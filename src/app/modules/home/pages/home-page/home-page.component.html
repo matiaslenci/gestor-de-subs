@@ -22,42 +22,46 @@
   <button
     [routerLink]="'/new'"
     type="button"
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-5"
+    class="relative mt-3 inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-cyan-800"
   >
-    Agregar Subscripción
+    <span
+      class="relative px-6 py-3 text-base transition-all duration-75 ease-in bg-gray-900 rounded-md group-hover:bg-opacity-0"
+    >
+      Nueva Subscripción
+    </span>
   </button>
 </div>
 <!-- MAIN -->
 <div
-  class="flex flex-col items-center content-center justify-center gap-3 mt-10"
+  class="flex flex-col items-center content-center justify-center gap-3 mt-6"
 >
   <!-- FILTRO -->
-  <div
-    class="flex flex-row items-center justify-center w-11/12 gap-2 mt-3 mb-2"
+  <form
+    [formGroup]="form"
+    class="flex flex-row items-center justify-center w-11/12 gap-2 mt-3 mb-4"
   >
-    <p class="dark:text-white">Ordenar por</p>
+    <p class="text-white">Ordenar por</p>
 
     <select
       id="countries"
-      [(ngModel)]="order"
-      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-6/12 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+      formControlName="order"
+      class="border text-sm rounded-lg card block w-6/12 py-2.5 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 text-center"
+      (change)="onChangeOrder()"
     >
-      <option selected value="higher">Mayor Precio</option>
+      <option value="higher">Mayor Precio</option>
       <option value="lower">Menor Precio</option>
       <!--
       <option value="CA">Pendientes de pago</option>
       <option value="FR">Compartidas</option>
      -->
     </select>
-  </div>
+  </form>
   <!-- CARDS -->
   <ul class="w-10/12" *ngIf="subsCount() > 0">
-    <app-card [order]="order"></app-card>
+    <app-card></app-card>
   </ul>
   <div *ngIf="subsCount() === 0" class="w-10/12">
-    <div
-      class="max-w-sm p-4 bg-gray-800 border border-gray-700 rounded-lg shadow"
-    >
+    <div class="max-w-sm p-4 rounded-lg shadow card">
       <h5 class="text-lg font-medium tracking-tight text-center text-white">
         Aún no agregaste una subscripción
       </h5>

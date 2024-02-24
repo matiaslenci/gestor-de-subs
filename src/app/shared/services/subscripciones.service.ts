@@ -30,6 +30,10 @@ export class SubscripcionesService {
 
   estados: any[] = [];
 
+  headers = new HttpHeaders({
+    Authorization: `Bearer ${this.storageSrv.token}`,
+  });
+
   constructor(private http: HttpClient, private storageSrv: StorageService) {}
 
   getDefaultSub(): void {
@@ -55,15 +59,13 @@ export class SubscripcionesService {
   }
 
   getAllSubs(): void {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.storageSrv.token}`,
-    });
-
-    this.http.get<ISub[]>(this.url + 'sub', { headers }).subscribe({
-      next: (res) => {
-        this.subs.set(res);
-      },
-    });
+    this.http
+      .get<ISub[]>(this.url + 'sub', { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          this.subs.set(res);
+        },
+      });
   }
 
   getSubById(id: string): Observable<any> {
@@ -76,12 +78,8 @@ export class SubscripcionesService {
   }
 
   saveSub(sub: any): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.storageSrv.token}`,
-    });
-
     return this.http
-      .post(this.url + 'sub', sub, { headers })
+      .post(this.url + 'sub', sub, { headers: this.headers })
       .pipe(
         catchError((err) =>
           throwError(
@@ -93,12 +91,8 @@ export class SubscripcionesService {
   }
 
   updateSub(sub: any, id: string | null): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.storageSrv.token}`,
-    });
-
     return this.http
-      .patch(this.url + 'sub/' + id, sub, { headers })
+      .patch(this.url + 'sub/' + id, sub, { headers: this.headers })
       .pipe(
         catchError((err) =>
           throwError(
@@ -110,12 +104,8 @@ export class SubscripcionesService {
   }
 
   deleteSub(id: string | null): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.storageSrv.token}`,
-    });
-
     return this.http
-      .delete(this.url + 'sub/' + id, { headers })
+      .delete(this.url + 'sub/' + id, { headers: this.headers })
       .pipe(
         catchError((err) =>
           throwError(

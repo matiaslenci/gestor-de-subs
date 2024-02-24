@@ -4,10 +4,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-auth-layout',
-  template: `<div
-      *ngIf="finishedAuthCheck()"
-      class="bg-white border-gray-200 dark:bg-gray-900 app-container"
-    >
+  template: `<div *ngIf="finishedAuthCheck()" class=" app-container">
       <span class="mx-5 sm:mx-auto">
         <h1
           class="mt-8 mb-3 text-4xl font-bold leading-none tracking-tight text-white sm:mt-10"

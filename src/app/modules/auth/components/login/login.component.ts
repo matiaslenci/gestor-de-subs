@@ -46,9 +46,6 @@ export class LoginComponent {
           console.error(err);
           this.errorLogin = true;
         },
-        complete() {
-          console.log('exito');
-        },
       });
     } else {
       this.form.markAllAsTouched();
