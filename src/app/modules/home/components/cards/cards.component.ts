@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   computed,
   effect,
+  signal,
 } from '@angular/core';
 import { Order, ISub } from 'src/app/core/interfaces';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
@@ -16,30 +17,19 @@ import { OrderListService } from '../../services/order-list.service';
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss'],
 })
-export class CardsComponent implements OnChanges {
-  listSubs: ISub[] = [];
+export class CardsComponent {
+  subs = computed(() => this.subsSrv.subs());
+
+  listSubs = [...this.subs().sort((a, b) => a.price - b.price)];
 
   currentDate!: Date;
-
-  @Input({ required: true }) order: Order = Order.higher;
 
   constructor(
     public subsSrv: SubscripcionesService,
     public orderSrv: OrderListService
   ) {
-    effect(() => {
-      if (this.subsSrv.subs()) {
-        this.setOrdenList();
-      }
-    });
-
+    this.changeOrder();
     this.currentDate = new Date();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.order = changes['order'].currentValue;
-
-    this.setOrdenList();
   }
 
   getDateExpiration(sub: ISub): string {
@@ -72,6 +62,16 @@ export class CardsComponent implements OnChanges {
     }
   }
 
+  changeOrder() {
+    effect(() => {
+      if (this.orderSrv.order() === Order.higher) {
+        this.listSubs = [...this.subs().sort((a, b) => a.price - b.price)];
+      } else if (this.orderSrv.order() === Order.lower) {
+        this.listSubs = [...this.subs().sort((a, b) => b.price - a.price)];
+      }
+    });
+  }
+
   /*   resetMonth(selectDate: Date, sub: ISub) {
     // Sumar un mes a la fecha objetivo
     selectDate.setMonth(selectDate.getMonth() + 1);
@@ -83,12 +83,4 @@ export class CardsComponent implements OnChanges {
     // Recalcular los días restantes
     this.getDateExpiration(sub);
   } */
-
-  setOrdenList(): void {
-    if (this.order === Order.higher) {
-      this.listSubs = [...this.orderSrv.sortSubsDescending()];
-    } else if (this.order === Order.lower) {
-      this.listSubs = [...this.orderSrv.sortSubsAscending()];
-    }
-  }
 }
