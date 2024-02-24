@@ -16,9 +16,7 @@ import { OrderListService } from '../../services/order-list.service';
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss'],
 })
-export class CardsComponent implements OnInit, OnChanges {
-  subs = computed(() => this.subsSrv.subs());
-
+export class CardsComponent implements OnChanges {
   listSubs: ISub[] = [];
 
   currentDate = new Date();
@@ -28,9 +26,13 @@ export class CardsComponent implements OnInit, OnChanges {
   constructor(
     public subsSrv: SubscripcionesService,
     public orderSrv: OrderListService
-  ) {}
-
-  ngOnInit(): void {}
+  ) {
+    effect(() => {
+      if (this.subsSrv.subs()) {
+        this.setOrdenList();
+      }
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.order = changes['order'].currentValue;

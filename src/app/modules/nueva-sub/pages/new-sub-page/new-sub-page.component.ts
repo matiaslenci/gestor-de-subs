@@ -6,6 +6,7 @@ import { SubscripcionesService } from 'src/app/shared/services/subscripciones.se
   styleUrls: ['./new-sub-page.component.scss'],
 })
 export class NewSubPageComponent implements OnInit {
+  search = '';
   constructor(public subsSrv: SubscripcionesService) {}
   ngOnInit(): void {
     this.subsSrv.getDefaultSub();

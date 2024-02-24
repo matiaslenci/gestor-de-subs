@@ -26,7 +26,7 @@ export class SubscripcionesService {
 
   subs = signal<ISub[]>([]);
 
-  defaultSubs: IDefaultSub[] = [];
+  defaultSubs = signal<IDefaultSub[]>([]);
 
   estados: any[] = [];
 
@@ -37,7 +37,7 @@ export class SubscripcionesService {
       .get<IDefaultSub[]>(this.url + 'default-sub' + '?limit=100')
       .subscribe({
         next: (res) => {
-          this.defaultSubs = res;
+          this.defaultSubs.set(res);
         },
         error: (error) => {
           console.error(error);
