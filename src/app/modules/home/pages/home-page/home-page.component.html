@@ -58,12 +58,6 @@
   </form>
   <!-- CARDS -->
   <ul class="w-10/12" *ngIf="subsCount() > 0">
-    <li>
-      <p class="text-sm font-medium text-blue-200 opacity-80">
-        {{ subsCount() }}
-        {{ subsCount() > 1 ? "subscripciones" : "subscripción" }}
-      </p>
-    </li>
     <app-card></app-card>
   </ul>
   <div *ngIf="subsCount() === 0" class="w-10/12">

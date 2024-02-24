@@ -1,4 +1,9 @@
-import { Component, computed, effect } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+} from '@angular/core';
 import { Order, ISub } from 'src/app/core/interfaces';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { OrderListService } from '../../services/order-list.service';
@@ -35,10 +40,10 @@ export class CardsComponent {
         difInMiliseconds / (1000 * 60 * 60 * 24)
       );
 
-      /*    if (difInDays > 0) {
-        this.resetMonth(selectDate, sub);
+      if (difInDays < 0) {
+        this.resetMonth(sub);
       }
- */
+
       if (difInDays > 1) {
         return `Vencimiento en ${difInDays} dias`;
       } else if (difInDays === 1) {
@@ -51,17 +56,36 @@ export class CardsComponent {
     }
   }
 
-  /*   resetMonth(selectDate: Date, sub: ISub) {
-    // Sumar un mes a la fecha objetivo
-    selectDate.setMonth(selectDate.getMonth() + 1);
+  resetMonth(sub: ISub) {
+    let updateSub = {
+      name: sub.name,
+      price: sub.price,
+      expiration: sub.expiration,
+      email: sub.email,
+      logo: sub.logo,
+      colorId: sub.colorId,
+    };
 
-    sub.expiration = selectDate.toISOString();
+    if (updateSub.expiration) {
+      let selectDate = new Date(updateSub.expiration);
 
-    if (sub.id) this.subsSrv.updateSub(sub, sub.id);
+      // Sumar un mes a la fecha objetivo
+      selectDate.setMonth(this.currentDate.getMonth() + 1);
 
-    // Recalcular los días restantes
-    this.getDateExpiration(sub);
-  } */
+      updateSub.expiration = selectDate.toISOString().split('T')[0];
+      sub.expiration = selectDate.toISOString().split('T')[0];
+
+      if (sub.id)
+        this.subsSrv.updateSub(updateSub, sub.id).subscribe({
+          error: (err) => {
+            console.error(err);
+          },
+        });
+
+      // Recalcular los días restantes
+      this.getDateExpiration(sub);
+    }
+  }
 
   /**
    * Cambia el orden de la lista de mayor a menor
