@@ -38,7 +38,7 @@
   <!-- FILTRO -->
   <form
     [formGroup]="form"
-    class="flex flex-row items-center justify-center w-11/12 gap-2 mt-3 mb-2"
+    class="flex flex-row items-center justify-center w-11/12 gap-2 mt-3 mb-4"
   >
     <p class="text-white">Ordenar por</p>
 
@@ -58,12 +58,16 @@
   </form>
   <!-- CARDS -->
   <ul class="w-10/12" *ngIf="subsCount() > 0">
+    <li>
+      <p class="text-sm font-medium text-blue-200 opacity-80">
+        {{ subsCount() }}
+        {{ subsCount() > 1 ? "subscripciones" : "subscripción" }}
+      </p>
+    </li>
     <app-card></app-card>
   </ul>
   <div *ngIf="subsCount() === 0" class="w-10/12">
-    <div
-      class="max-w-sm p-4 bg-gray-800 border border-gray-700 rounded-lg shadow"
-    >
+    <div class="max-w-sm p-4 rounded-lg shadow card">
       <h5 class="text-lg font-medium tracking-tight text-center text-white">
         Aún no agregaste una subscripción
       </h5>
