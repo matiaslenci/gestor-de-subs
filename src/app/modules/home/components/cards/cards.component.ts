@@ -1,13 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  computed,
-  effect,
-  signal,
-} from '@angular/core';
+import { Component, computed, effect } from '@angular/core';
 import { Order, ISub } from 'src/app/core/interfaces';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { OrderListService } from '../../services/order-list.service';
@@ -44,8 +35,6 @@ export class CardsComponent {
         difInMiliseconds / (1000 * 60 * 60 * 24)
       );
 
-      difInDays = difInDays + 1;
-
       /*    if (difInDays > 0) {
         this.resetMonth(selectDate, sub);
       }
@@ -62,16 +51,6 @@ export class CardsComponent {
     }
   }
 
-  changeOrder() {
-    effect(() => {
-      if (this.orderSrv.order() === Order.higher) {
-        this.listSubs = [...this.subs().sort((a, b) => a.price - b.price)];
-      } else if (this.orderSrv.order() === Order.lower) {
-        this.listSubs = [...this.subs().sort((a, b) => b.price - a.price)];
-      }
-    });
-  }
-
   /*   resetMonth(selectDate: Date, sub: ISub) {
     // Sumar un mes a la fecha objetivo
     selectDate.setMonth(selectDate.getMonth() + 1);
@@ -83,4 +62,17 @@ export class CardsComponent {
     // Recalcular los días restantes
     this.getDateExpiration(sub);
   } */
+
+  /**
+   * Cambia el orden de la lista de mayor a menor
+   */
+  changeOrder() {
+    effect(() => {
+      if (this.orderSrv.order() === Order.higher) {
+        this.listSubs = [...this.subs().sort((a, b) => b.price - a.price)];
+      } else if (this.orderSrv.order() === Order.lower) {
+        this.listSubs = [...this.subs().sort((a, b) => a.price - b.price)];
+      }
+    });
+  }
 }

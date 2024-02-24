@@ -11,6 +11,7 @@ import { SubscripcionesService } from 'src/app/shared/services/subscripciones.se
 import { OrderListService } from '../../services/order-list.service';
 import { Order } from 'src/app/core/interfaces';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   templateUrl: './home-page.component.html',
@@ -47,15 +48,18 @@ export class HomePageComponent implements OnInit {
     private subSrv: SubscripcionesService,
     private authSrv: AuthService,
     private orderSrv: OrderListService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private storageSrv: StorageService
   ) {}
 
   ngOnInit(): void {
     this.subSrv.getAllSubs();
 
     this.form = this.fb.group({
-      order: Order.higher,
+      order: this.storageSrv.order || Order.higher,
     });
+
+    this.orderSrv.order.set(this.order);
   }
 
   tooglePrecioMensual(): void {
@@ -66,6 +70,7 @@ export class HomePageComponent implements OnInit {
 
   onChangeOrder() {
     this.orderSrv.order.set(this.order);
+    this.storageSrv.order = this.order;
   }
 
   get order() {
