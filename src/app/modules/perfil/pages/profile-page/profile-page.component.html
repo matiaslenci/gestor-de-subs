@@ -1,0 +1,39 @@
+<section
+  class="flex flex-col items-center w-64 px-8 py-4 mx-auto shadow-lg rounded-2xl"
+>
+  <div class="flex items-center justify-between"></div>
+  <div
+    id="avatarButton"
+    type="button"
+    data-dropdown-toggle="userDropdown"
+    data-dropdown-placement="bottom-start"
+    class="relative inline-flex items-center justify-center w-24 h-24 mx-auto mt-6 overflow-hidden rounded-full cursor-pointer card"
+  >
+    <span class="text-4xl font-semibold text-gray-300">{{
+      user()?.avatar | uppercase
+    }}</span>
+  </div>
+
+  <div class="mt-8">
+    <h2 class="text-3xl font-bold text-white">
+      {{ user()?.fullName | titlecase }}
+    </h2>
+  </div>
+
+  <div class="mt-4">
+    <p class="text-xl font-medium text-blue-200">{{ user()?.email }}</p>
+  </div>
+
+  <button
+    type="button"
+    class="border focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-12 py-2.5 text-center mt-4 border-blue-400 text-blue-400 hover:text-white hover:bg-blue-400 focus:ring-blue-600"
+  >
+    Editar perfil
+  </button>
+  <button
+    type="button"
+    class="border focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-10 py-2.5 text-center mt-4 border-gray-400 text-gray-400 hover:text-white hover:bg-gray-400 focus:ring-gray-600"
+  >
+    Configuración
+  </button>
+</section>
