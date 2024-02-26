@@ -35,6 +35,13 @@ const routes: Routes = [
             (m) => m.ShareSubModule
           ),
       },
+      {
+        path: 'perfil',
+        loadChildren: () =>
+          import('./modules/perfil/profile.module').then(
+            (m) => m.ProfileModule
+          ),
+      },
 
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     ],
