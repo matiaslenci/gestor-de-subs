@@ -77,10 +77,28 @@ export class AuthService {
       catchError((err) => throwError(() => err.error.message))
     );
   }
+
   public logout() {
     this._authStatus.set(AuthStatus.notAuthenticated);
     this._currentUser.set(null);
     this.storageSrv.removeToken();
+  }
+
+  public update(newUser: any) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageSrv.token}`,
+    });
+
+    return this.http
+      .patch<any>(`${this.url}update`, newUser, {
+        headers,
+      })
+      .pipe(
+        tap((res) => {
+          this._currentUser.set(res);
+        }),
+        catchError((err) => throwError(() => err.error.message))
+      );
   }
 
   private saveCredentials(res: IResponse) {

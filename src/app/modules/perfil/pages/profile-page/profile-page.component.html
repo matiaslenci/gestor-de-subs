@@ -2,20 +2,11 @@
   class="flex flex-col items-center w-64 px-8 py-4 mx-auto shadow-lg rounded-2xl"
 >
   <div class="flex items-center justify-between"></div>
-  <div
-    id="avatarButton"
-    type="button"
-    data-dropdown-toggle="userDropdown"
-    data-dropdown-placement="bottom-start"
-    class="relative inline-flex items-center justify-center w-24 h-24 mx-auto mt-6 overflow-hidden rounded-full cursor-pointer card"
-  >
-    <span class="text-4xl font-semibold text-gray-300">{{
-      user()?.avatar | uppercase
-    }}</span>
-  </div>
+
+  <app-avatar [avatar]="user()?.avatar" />
 
   <div class="mt-8">
-    <h2 class="text-3xl font-bold text-white">
+    <h2 class="text-3xl font-bold text-center text-white whitespace-nowrap">
       {{ user()?.fullName | titlecase }}
     </h2>
   </div>
@@ -27,14 +18,51 @@
   <button
     type="button"
     (click)="editRedirect()"
-    class="border focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-12 py-2.5 text-center mt-4 border-blue-400 text-blue-400 hover:text-white hover:bg-blue-400 focus:ring-blue-600"
+    class="border focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-12 py-2.5 text-center mt-4 border-blue-400 text-blue-400 hover:text-white hover:bg-blue-400 focus:ring-blue-600 flex flex-row items-center gap-2 flex-nowrap whitespace-nowrap"
   >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon icon-tabler icon-tabler-edit"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+      <path
+        d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+      />
+      <path d="M16 5l3 3" />
+    </svg>
     Editar perfil
   </button>
   <button
     type="button"
-    class="border focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-10 py-2.5 text-center mt-4 border-gray-300 text-gray-300 hover:text-white hover:bg-gray-300 focus:ring-gray-500"
+    class="border focus:ring-4 focus:outline-none font-medium rounded-lg text-base px-10 py-2.5 text-center mt-4 border-gray-300 text-gray-300 hover:text-gray-700 hover:bg-gray-300 focus:ring-gray-500 flex flex-row gap-2"
   >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon icon-tabler icon-tabler-settings"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path
+        d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"
+      />
+      <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+    </svg>
     Configuración
   </button>
 </section>
