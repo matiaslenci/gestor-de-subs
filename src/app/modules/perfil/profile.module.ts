@@ -5,9 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileRoutingModule } from './profile.routing';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { EditProfilePageComponent } from './pages/edit-profile-page/edit-profile-page.component';
 
 @NgModule({
-  declarations: [ProfilePageComponent],
+  declarations: [ProfilePageComponent, EditProfilePageComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -15,6 +16,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     FormsModule,
     ReactiveFormsModule,
     ProfileRoutingModule,
+    RouterModule,
   ],
   exports: [ProfileRoutingModule],
 })
