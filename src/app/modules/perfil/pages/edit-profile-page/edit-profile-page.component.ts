@@ -37,7 +37,7 @@ export class EditProfilePageComponent implements OnInit {
         next: () => {
           this.form.reset();
           //TODO: añadir alert
-          this.router.navigate(['/perfil']);
+          this.redirectProfile();
         },
         error: (err) => {
           console.error(err);
@@ -46,6 +46,10 @@ export class EditProfilePageComponent implements OnInit {
     } else {
       this.form.markAllAsTouched();
     }
+  }
+
+  redirectProfile() {
+    this.router.navigate(['/perfil']);
   }
 
   get avatar() {
