@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ISub } from 'src/app/core/interfaces';
+import { BotonSharedComponent } from 'src/app/shared/components/boton-shared/boton-shared.component';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 
 @Component({
@@ -21,7 +22,6 @@ export class SubsPageComponent implements OnInit {
    */
   hidePassword: boolean = true;
 
-  //TODO: Traer desde rest
   password = '';
 
   /**
@@ -35,6 +35,7 @@ export class SubsPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
@@ -62,5 +63,10 @@ export class SubsPageComponent implements OnInit {
 
   onEdit() {
     this.router.navigate(['/sub/edit', this.id]);
+  }
+
+  openSharedSub() {
+    this.subSrv.subId = this.id;
+    this._bottomSheet.open(BotonSharedComponent);
   }
 }
