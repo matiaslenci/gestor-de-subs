@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'gestor-subs';
 
+  url = localStorage.getItem('url') || '';
+
   constructor(private authSrv: AuthService, private router: Router) {}
 
   ngOnInit(): void {
@@ -23,7 +25,12 @@ export class AppComponent implements OnInit {
       case AuthStatus.checking:
         return;
       case AuthStatus.authenticated:
-        this.router.navigateByUrl('');
+        if (this.url) {
+          this.router.navigateByUrl(this.url);
+        } else {
+          this.router.navigateByUrl('');
+        }
+
         return;
       case AuthStatus.notAuthenticated:
         // this.router.navigateByUrl('/auth/login');

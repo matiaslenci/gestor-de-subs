@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './core/pages/pages.component';
-import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './core/guards';
+import {
+  isAuthenticatedGuard,
+  isNotAuthenticatedGuard,
+  UrlGuard,
+} from './core/guards';
 
 const routes: Routes = [
   {
@@ -16,6 +20,7 @@ const routes: Routes = [
       },
       {
         path: 'sub',
+        canActivate: [UrlGuard],
         loadChildren: () =>
           import('./modules/subscripcion/subscripcion.module').then(
             (m) => m.SubscripcionModule
