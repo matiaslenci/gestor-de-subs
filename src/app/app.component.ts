@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'gestor-subs';
 
-  url = localStorage.getItem('url') || '';
+  url = sessionStorage.getItem('url') || '';
 
   constructor(private authSrv: AuthService, private router: Router) {}
 
@@ -30,10 +30,10 @@ export class AppComponent implements OnInit {
         } else {
           this.router.navigateByUrl('');
         }
+        sessionStorage.removeItem('url');
 
         return;
       case AuthStatus.notAuthenticated:
-        // this.router.navigateByUrl('/auth/login');
         return;
     }
   });
