@@ -1,29 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IDefaultSub, ISub } from 'src/app/core/interfaces';
+import { formatDate } from '@angular/common';
 
 @Component({
   templateUrl: './gestionar-sub-page.component.html',
   styleUrls: ['./gestionar-sub-page.component.scss'],
 })
-export class GestionarSubPageComponent implements OnInit, OnDestroy {
+export class GestionarSubPageComponent implements OnInit {
   formSub: FormGroup = new FormGroup({});
 
-  /**
-   * Subscription de rxjs para guardar subscripciones y desuscribirse en el
-   * NgOnDestroy
-   */
-  private subscriptions!: Subscription[];
-
-  sub: any;
+  sub!: IDefaultSub | ISub;
   estados: any;
 
-  /**
-   * id de la suscripción que se recupera por query params para
-   * setear subscripción
-   */
-  id: number = 0;
+  term: string | null = '';
+
+  id: string | null = '';
 
   /**
    * Bool que inidica si ya agrego amigos a la subscripcion
@@ -43,41 +38,59 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
    */
   editMode = false;
 
-  constructor(public subSrv: SubscripcionesService, private fb: FormBuilder) {}
+  today = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+
+  constructor(
+    public subSrv: SubscripcionesService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.term = params.get('term');
+      this.id = params.get('id');
+
+      if (this.id) {
+        this.editMode = true;
+      } else {
+        this.editMode = false;
+      }
+    });
+
     this.formSub = this.fb.group({
-      nombre: ['', Validators.required],
-      estado: '',
-      precio: ['', Validators.required],
-      vencimiento: '',
-      usuario: '',
+      name: ['', Validators.required],
+      //estado: '',
+      price: null,
+      expiration: '',
+      email: '',
       password: '',
     });
 
-    if ((this.editMode = false)) {
-      this.subSrv.getDefaultSubById(this.id).subscribe({
-        next: (res: any) => {
+    if (!this.editMode) {
+      this.subSrv.getDefaultSubById(this.term ?? '').subscribe({
+        next: (res: IDefaultSub) => {
           this.sub = res;
 
-          this.formSub.patchValue(res);
+          this.formSub.patchValue({ name: res.name });
+        },
+        error: (error: Error) => {
+          console.error(`ERROR: No se pudo obtener la subscripción${error}`);
+        },
+      });
+    } else {
+      this.subSrv.getSubById(this.id ?? '').subscribe({
+        next: (res: ISub) => {
+          this.sub = res;
+
+          this.formSub.patchValue({ ...res });
         },
         error: (error: Error) => {
           console.error(`ERROR: No se pudo obtener la subscripción${error}`);
         },
       });
     }
-
-    this.subSrv.getSubById(this.id).subscribe({
-      next: (res: any) => {
-        this.sub = res;
-
-        this.formSub.patchValue({ nombre: res.nombre });
-      },
-      error: (error: Error) => {
-        console.error(`ERROR: No se pudo obtener la subscripción${error}`);
-      },
-    });
 
     this.subSrv.getEstadosPago().subscribe({
       next: (res: any) => {
@@ -86,6 +99,10 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
       error: (error: Error) => {
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
       },
+    });
+
+    this.formSub.get('name')?.valueChanges.subscribe((value: string) => {
+      this.editIcon(value);
     });
   }
   /**
@@ -97,9 +114,72 @@ export class GestionarSubPageComponent implements OnInit, OnDestroy {
     this.hidePassword = !this.hidePassword;
   }
 
+  get name() {
+    return this.formSub.get('name')?.value;
+  }
+
+  private prepareNewSub() {
+    let newSub = {
+      ...this.formSub.value,
+    };
+
+    newSub.name = newSub.name.trim();
+
+    if (!newSub.logo) newSub.logo = this.sub.logo;
+
+    if (!newSub.price) newSub.price = 0;
+
+    if (!newSub.colorId) newSub.colorId = this.sub.colorId;
+
+    if (newSub.email) newSub.email = newSub.email.trim();
+
+    if (newSub.password) newSub.password = newSub.password.trim();
+
+    return newSub;
+  }
+
+  saveSub() {
+    const newSub = this.prepareNewSub();
+
+    this.subSrv.saveSub(newSub).subscribe({
+      next: (res) => {
+        this.router.navigate(['/sub/' + res.sub.id]);
+      },
+      error: (error: Error) => {
+        console.error(`ERROR: ${error}`);
+      },
+    });
+  }
+
+  updateSub() {
+    const newSub = this.prepareNewSub();
+
+    this.subSrv.updateSub(newSub, this.id).subscribe({
+      next: () => {
+        this.router.navigate(['/sub/' + this.id]);
+      },
+      error: (error: Error) => {
+        console.error(`ERROR: ${error}`);
+      },
+    });
+  }
+
   /**
    * Permite editar el icono del la sub
    */
-  editIcon() {}
-  ngOnDestroy(): void {}
+  editIcon(value: string) {
+    const palabras = value.split(' ');
+    let iniciales = '';
+
+    for (let i = 0; i < Math.min(2, palabras.length); i++) {
+      iniciales += palabras[i].charAt(0);
+    }
+
+    this.sub.logo = iniciales.toUpperCase().trim();
+  }
+
+  editColor(id: number, color: string) {
+    this.sub.colorId = id;
+    this.sub.color.name = color;
+  }
 }

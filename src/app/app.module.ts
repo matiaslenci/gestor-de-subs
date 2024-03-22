@@ -12,21 +12,40 @@ import { SubscripcionModule } from './modules/subscripcion/subscripcion.module';
 import { RouterModule } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthModule } from './modules/auth/auth.module';
+import { PagesComponent } from './core/pages/pages.component';
+import { AuthInterceptor } from './core/interceptor/auth.interceptor';
+import { ProfileModule } from './modules/perfil/profile.module';
 
 registerLocaleData(localeEs, 'es-ES');
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    PagesComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     HomeModule,
+    AuthModule,
     SubscripcionModule,
+    HttpClientModule,
+    ProfileModule,
     RouterModule,
   ],
-  providers: [],
+  providers: [
+    /*     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }, */
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

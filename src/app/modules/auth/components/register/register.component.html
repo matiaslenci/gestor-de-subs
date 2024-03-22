@@ -1,0 +1,118 @@
+<form class="mx-6 mt-2 space-y-5 sm:mt-5" [formGroup]="form">
+  <div>
+    <label for="fullName" class="block mb-2 text-base font-medium text-white"
+      >Nombre completo</label
+    >
+    <input
+      type="text"
+      id="fullName"
+      formControlName="fullName"
+      placeholder="Nombre y Apellido"
+      class="border text-base rounded-lg py-3 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+    />
+    <div>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="fullName?.hasError('required') && fullName?.touched"
+      >
+        El Nombre y apellido son obligatorios.
+      </p>
+    </div>
+  </div>
+  <div>
+    <label for="email" class="block mb-2 text-base font-medium text-white"
+      >Correo electrónico</label
+    >
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      placeholder="nombre@email.com"
+      class="border text-base py-3 rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+    />
+    <div>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="email?.hasError('required') && email?.touched"
+      >
+        El email es obligatorio.
+      </p>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="email?.hasError('email') && email?.touched"
+      >
+        Debe utilizar un email valido
+      </p>
+    </div>
+  </div>
+  <div>
+    <label for="password" class="block mb-2 text-base font-medium text-white"
+      >Contraseña</label
+    >
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      placeholder="Contraseña"
+      class="border text-base rounded-lg py-3 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+    />
+    <div>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="password?.hasError('required') && password?.touched"
+      >
+        La contraseña es obligatoria.
+      </p>
+      <p
+        class="block mb-2 text-base font-medium text-red-500"
+        *ngIf="password?.hasError('passwordRequirements') && password?.touched"
+      >
+        La contraseña debe tener almenos una mayúscula, una minúscula y un
+        numero
+      </p>
+    </div>
+  </div>
+  <div>
+    <label
+      for="repeatPassword"
+      class="block mb-2 text-base font-medium text-white"
+      >Confirme contraseña</label
+    >
+    <input
+      type="password"
+      id="repeatPassword"
+      formControlName="confirmPassword"
+      placeholder="Repita su contraseña"
+      class="border text-base rounded-lg py-3 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+    />
+    <!-- Mensaje de error si las contraseñas no coinciden -->
+    <div class="h-4">
+      <p
+        *ngIf="form.hasError('passwordMismatch')"
+        class="block mb-2 text-base font-medium text-red-500"
+      >
+        Las contraseñas no coinciden.
+      </p>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    (click)="register()"
+    (keyup.enter)="register()"
+    class="w-full px-5 py-4 mt-3 text-base font-medium text-center text-white bg-blue-600 rounded-lg focus:ring-4 focus:outline-none hover:bg-blue-700 focus:ring-blue-800"
+  >
+    Registrarse
+  </button>
+</form>
+
+<div class="m-6">
+  <p class="text-gray-500 dark:text-gray-400">
+    Ya tengo una cuenta
+    <a
+      routerLink="/auth/login"
+      class="font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline"
+      >Iniciar sesión</a
+    >
+  </p>
+</div>

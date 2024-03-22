@@ -1,34 +1,79 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  computed,
+} from '@angular/core';
+import { ISub } from 'src/app/core/interfaces';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
+import { OrderListService } from '../../services/order-list.service';
+import { Order } from 'src/app/core/interfaces';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
-  /**
-   * Gasto total mensual de subscripciones
-   */
-  precioMensual: number = 0;
-
-  /**
-   * Gasto total anual de subscripciones
-   */
-  precioAnual: number = 0;
-
   showMensual: boolean = true;
-  constructor(private subSrv: SubscripcionesService) {}
-  ngOnInit(): void {
-    for (let i = 0; i < this.subSrv.subscripciones.length; i++) {
-      this.precioMensual =
-        this.precioMensual + this.subSrv.subscripciones[i].precio;
+
+  user = computed(() => this.authSrv.currentUser());
+
+  subs = computed(() => this.subSrv.subs());
+
+  monthlyPrice = computed<number>(() => {
+    let precioMensual = 0;
+
+    for (let sub of this.subSrv.subs()) {
+      precioMensual = precioMensual + sub.price;
     }
-    this.precioAnual = this.precioMensual * 12;
+
+    return precioMensual;
+  });
+
+  yearlyPrice = computed(() => {
+    return this.monthlyPrice() * 12;
+  });
+
+  subsCount = computed(() => {
+    return this.subs().length;
+  });
+
+  form: FormGroup = new FormGroup({});
+
+  constructor(
+    private subSrv: SubscripcionesService,
+    private authSrv: AuthService,
+    private orderSrv: OrderListService,
+    private fb: FormBuilder,
+    private storageSrv: StorageService
+  ) {}
+
+  ngOnInit(): void {
+    this.subSrv.getAllSubs();
+
+    this.form = this.fb.group({
+      order: this.storageSrv.order || Order.higher,
+    });
+
+    this.orderSrv.order.set(this.order);
   }
 
   tooglePrecioMensual(): void {
     this.showMensual = !this.showMensual;
     if (this.showMensual) {
     }
+  }
+
+  onChangeOrder() {
+    this.orderSrv.order.set(this.order);
+    this.storageSrv.order = this.order;
+  }
+
+  get order() {
+    return this.form.get('order')?.value;
   }
 }

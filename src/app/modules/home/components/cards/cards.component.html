@@ -1,34 +1,51 @@
-<li *ngFor="let sub of subsSrv.subscripciones" class="cursor-pointer">
-  <div
-    [routerLink]="'/sub'"
-    class="flex flex-row max-w-sm px-6 py-5 mt-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-  >
-    <div class="flex flex-row w-full gap-4">
-      <!-- IMG -->
+<ng-container *ngIf="listSubs.length > 0">
+  <li *ngFor="let sub of listSubs" class="cursor-pointer">
+    <div
+      [routerLink]="'/sub/' + sub.id"
+      class="flex flex-row max-w-sm px-6 py-5 mt-3 card"
+    >
+      <div class="flex flex-row w-full gap-4">
+        <!-- IMG -->
 
-      <app-logo-sub [sub]="sub"></app-logo-sub>
-      <!-- CONTENT -->
-      <div class="flex flex-col justify-between w-full">
-        <div class="flex flex-row items-center content-center justify-between">
-          <h5
-            class="text-xl font-medium tracking-tight text-gray-900 dark:text-white"
+        <app-logo-sub [sub]="sub"></app-logo-sub>
+        <!-- CONTENT -->
+        <div
+          class="flex flex-col justify-around w-full"
+          *ngIf="sub?.expiration"
+        >
+          <div
+            class="flex flex-row flex-wrap items-center content-center justify-between"
           >
-            {{ sub.nombre }}
-          </h5>
-          <p class="font-medium text-gray-700 dark:text-white">
-            ${{ sub.precio }}
-            <span class="font-normal text-gray-700 dark:text-gray-400"
-              >/mes</span
-            >
-          </p>
-        </div>
+            <h5 class="text-xl font-medium tracking-tight text-white">
+              {{ sub.name | titlecase }}
+            </h5>
+            <p class="font-medium text-white" *ngIf="sub.price">
+              ${{ sub.price }}
+              <span class="font-normal text-gray-400">/mes</span>
+            </p>
+          </div>
 
-        <div class="text-left">
-          <p class="font-normal text-gray-700 dark:text-gray-400">
-            Vencimiento en 10 dias
-          </p>
+          <div class="text-left">
+            <p class="font-normal text-gray-400">
+              {{ getDateExpiration(sub) }}
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex flex-col items-start justify-center w-full"
+          *ngIf="!sub.expiration"
+        >
+          <div class="flex flex-col flex-wrap content-center">
+            <h5 class="text-xl font-medium tracking-tight text-white">
+              {{ sub.name }}
+            </h5>
+            <p class="font-medium text-white" *ngIf="sub.price">
+              ${{ sub.price }}
+              <span class="font-normal text-gray-400">/mes</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</li>
+  </li>
+</ng-container>
