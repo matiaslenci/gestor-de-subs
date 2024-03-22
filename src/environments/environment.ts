@@ -1,4 +1,4 @@
-const api = 'http://localhost:3000/api/';
+const api = 'https://gestor-subs-back.up.railway.app/api/auth/register/api/';
 
 export const environment = {
   api: api,
