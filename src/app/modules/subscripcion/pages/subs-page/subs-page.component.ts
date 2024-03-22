@@ -47,6 +47,8 @@ export class SubsPageComponent implements OnInit {
         this.password = res.password;
       },
       error: (error: Error) => {
+        this.router.navigate(['/']);
+        localStorage.removeItem('url');
         console.error(`ERROR: No se pudo obtener la subscripción${error}`);
       },
     });
