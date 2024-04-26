@@ -1,15 +1,5 @@
 import { Component, OnInit, computed } from '@angular/core';
-import {
-  initAccordions,
-  initCollapses,
-  initDials,
-  initDismisses,
-  initDrawers,
-  initDropdowns,
-  initModals,
-  initPopovers,
-  initTooltips,
-} from 'flowbite';
+import { initCollapses, initDropdowns } from 'flowbite';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
@@ -19,6 +9,7 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   user = computed(() => this.authSrv.currentUser());
+  authStatus = computed(() => this.authSrv.authStatus());
 
   constructor(private authSrv: AuthService) {}
   ngOnInit(): void {

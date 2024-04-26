@@ -1,1 +1,70 @@
-<p>guest-preview-page works!</p>
+<!-- TOTAL -->
+<div class="flex flex-col items-center content-center justify-center gap-3">
+  <h1 class="text-6xl font-extrabold dark:text-white">
+    ${{
+      showMensual
+        ? (monthlyPrice() | number : "1.0-0" : "es-ES")
+        : (yearlyPrice() | number : "1.0-0" : "es-ES")
+    }}
+  </h1>
+  <div
+    class="flex-row items-center cursor-pointer flexjustify-center"
+    (click)="showMensual = !showMensual"
+  >
+    <p class="text-2xl dark:text-white">
+      Total
+      <span class="text-2xl dark:text-gray-400">{{
+        showMensual ? "mensual" : "anual"
+      }}</span>
+    </p>
+  </div>
+  <!-- AGREGAR SUBSCRIPCION -->
+  <button
+    [routerLink]="'/new'"
+    type="button"
+    class="relative mt-3 inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-cyan-800"
+  >
+    <span
+      class="relative px-6 py-3 text-base transition-all duration-75 ease-in bg-gray-900 rounded-md group-hover:bg-opacity-0"
+    >
+      Nueva Subscripción
+    </span>
+  </button>
+</div>
+<!-- MAIN -->
+<div
+  class="flex flex-col items-center content-center justify-center gap-3 mt-6"
+>
+  <!-- FILTRO -->
+  <form
+    [formGroup]="form"
+    class="flex flex-row items-center justify-center w-11/12 gap-2 mt-3 mb-4"
+  >
+    <p class="text-white">Ordenar por</p>
+
+    <select
+      id="countries"
+      formControlName="order"
+      class="border text-sm rounded-lg card block w-6/12 py-2.5 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 text-center"
+      (change)="onChangeOrder()"
+    >
+      <option value="higher">Mayor Precio</option>
+      <option value="lower">Menor Precio</option>
+      <!--
+      <option value="CA">Pendientes de pago</option>
+      <option value="FR">Compartidas</option>
+     -->
+    </select>
+  </form>
+  <!-- CARDS -->
+  <ul class="w-10/12" *ngIf="subsCount() > 0">
+    <app-card></app-card>
+  </ul>
+  <div *ngIf="subsCount() === 0" class="w-10/12">
+    <div class="max-w-sm p-4 rounded-lg shadow card">
+      <h5 class="text-lg font-medium tracking-tight text-center text-white">
+        Aún no agregaste una subscripción
+      </h5>
+    </div>
+  </div>
+</div>

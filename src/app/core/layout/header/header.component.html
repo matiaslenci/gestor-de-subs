@@ -5,6 +5,7 @@
     <!-- AVATAR -->
 
     <div
+      *ngIf="authStatus() === 'authenticated'"
       id="avatarButton"
       type="button"
       data-dropdown-toggle="userDropdown"

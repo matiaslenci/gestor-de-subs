@@ -15,6 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     LogoSubComponent,
   ],
-  exports: [HomePageComponent],
+  exports: [HomePageComponent, CardsComponent],
 })
 export class HomeModule {}

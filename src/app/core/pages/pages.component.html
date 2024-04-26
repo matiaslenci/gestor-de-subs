@@ -1,6 +1,6 @@
 <div class="app-container" *ngIf="finishedAuthCheck()">
   <div class="header">
-    <app-header></app-header>
+    <app-header />
   </div>
   <main class="w-full max-w-md mx-auto sm:px-0 main">
     <router-outlet></router-outlet>
@@ -10,7 +10,6 @@
     <app-footer></app-footer>
   </div>
 </div>
-<!-- TODO:Componentizar -->
 <div
   class="bg-gray-900 border-gray-200 app-container"
   *ngIf="!finishedAuthCheck()"

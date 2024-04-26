@@ -11,16 +11,16 @@ const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
-    canActivate: [isAuthenticatedGuard],
     children: [
       {
         path: 'inicio',
+        canActivate: [isAuthenticatedGuard],
         loadChildren: () =>
           import('./modules/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'sub',
-        canActivate: [UrlGuard],
+        canActivate: [UrlGuard, isAuthenticatedGuard],
         loadChildren: () =>
           import('./modules/subscripcion/subscripcion.module').then(
             (m) => m.SubscripcionModule
@@ -35,6 +35,7 @@ const routes: Routes = [
       },
       {
         path: 'share',
+        canActivate: [isAuthenticatedGuard],
         loadChildren: () =>
           import('./modules/compartir-sub/share-sub.module').then(
             (m) => m.ShareSubModule
@@ -42,22 +43,24 @@ const routes: Routes = [
       },
       {
         path: 'perfil',
+        canActivate: [isAuthenticatedGuard],
         loadChildren: () =>
           import('./modules/perfil/profile.module').then(
             (m) => m.ProfileModule
           ),
       },
+      {
+        path: 'preview',
+        loadChildren: () =>
+          import('./modules/guest-preview/guest-preview.module').then(
+            (m) => m.GuestPreviewModule
+          ),
+      },
 
-      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+      { path: '', redirectTo: 'preview', pathMatch: 'full' },
     ],
   },
-  {
-    path: 'preview',
-    loadChildren: () =>
-      import('./modules/guest-preview/guest-preview.module').then(
-        (m) => m.GuestPreviewModule
-      ),
-  },
+
   {
     path: 'auth',
     canActivate: [isNotAuthenticatedGuard],
