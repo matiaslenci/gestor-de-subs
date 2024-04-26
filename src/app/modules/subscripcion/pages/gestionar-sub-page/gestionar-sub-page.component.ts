@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubscripcionesService } from 'src/app/shared/services/subscripciones.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDefaultSub, ISub } from 'src/app/core/interfaces';
 import { formatDate } from '@angular/common';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
   templateUrl: './gestionar-sub-page.component.html',
   styleUrls: ['./gestionar-sub-page.component.scss'],
 })
 export class GestionarSubPageComponent implements OnInit {
+  authStatus = computed(() => this.authSrv.authStatus());
+
   formSub: FormGroup = new FormGroup({});
 
   sub!: IDefaultSub | ISub;
@@ -44,7 +47,8 @@ export class GestionarSubPageComponent implements OnInit {
     public subSrv: SubscripcionesService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authSrv: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +65,6 @@ export class GestionarSubPageComponent implements OnInit {
 
     this.formSub = this.fb.group({
       name: ['', Validators.required],
-      //estado: '',
       price: null,
       expiration: '',
       email: '',
@@ -141,6 +144,7 @@ export class GestionarSubPageComponent implements OnInit {
   saveSub() {
     const newSub = this.prepareNewSub();
 
+    //TODO: Si no esta logeado guardar en localStorage
     this.subSrv.saveSub(newSub).subscribe({
       next: (res) => {
         this.router.navigate(['/sub/' + res.sub.id]);
