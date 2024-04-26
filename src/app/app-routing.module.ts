@@ -51,7 +51,13 @@ const routes: Routes = [
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
     ],
   },
-
+  {
+    path: 'preview',
+    loadChildren: () =>
+      import('./modules/guest-preview/guest-preview.module').then(
+        (m) => m.GuestPreviewModule
+      ),
+  },
   {
     path: 'auth',
     canActivate: [isNotAuthenticatedGuard],
